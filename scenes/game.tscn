@@ -18,69 +18,58 @@ layout_mode = 1
 layout_mode = 0
 offset_left = -14.003998
 offset_top = 17.900146
-offset_right = 185.99649
-offset_bottom = 297.9007
+offset_right = 185.99652
+offset_bottom = 297.90106
 rotation = -0.19999997
 evaluation_expression = "x + 5"
-drag_rotation_strength = null
-rotation_lerp_speed = null
+latex_expression = "x + 5"
 
 [node name="Card2" parent="Hand" instance=ExtResource("2_lnu2h")]
 layout_mode = 0
 offset_left = 104.4317
 offset_top = -1.2130127
-offset_right = 304.43237
-offset_bottom = 278.78748
+offset_right = 304.43182
+offset_bottom = 278.7881
 rotation = -0.11999993
 evaluation_expression = "1.0 / x"
 latex_expression = "\\frac{1}{x}"
-drag_rotation_strength = null
-rotation_lerp_speed = null
 
 [node name="Card3" parent="Hand" instance=ExtResource("2_lnu2h")]
 layout_mode = 0
 offset_left = 224.01599
 offset_top = -10.800171
-offset_right = 424.01697
-offset_bottom = 269.2002
+offset_right = 424.0182
+offset_bottom = 269.20093
 rotation = -0.040000007
 evaluation_expression = "x * 2"
 latex_expression = "2x"
-drag_rotation_strength = null
-rotation_lerp_speed = null
 
 [node name="Card4" parent="Hand" instance=ExtResource("2_lnu2h")]
 layout_mode = 0
 offset_left = 343.984
 offset_top = -10.800171
-offset_right = 543.9845
-offset_bottom = 269.2002
+offset_right = 543.9861
+offset_bottom = 269.20093
 rotation = 0.040000036
 evaluation_expression = "x ** 3"
 latex_expression = "x^3"
-drag_rotation_strength = null
-rotation_lerp_speed = null
 
 [node name="Card5" parent="Hand" instance=ExtResource("2_lnu2h")]
 layout_mode = 0
 offset_left = 463.5683
 offset_top = -1.2130127
-offset_right = 663.56836
-offset_bottom = 278.78748
+offset_right = 663.5687
+offset_bottom = 278.7881
 rotation = 0.11999996
 evaluation_expression = "abs(x)"
 latex_expression = "|x|"
-drag_rotation_strength = null
-rotation_lerp_speed = null
 
 [node name="Card6" parent="Hand" instance=ExtResource("2_lnu2h")]
 layout_mode = 0
 offset_left = 582.004
 offset_top = 17.900146
-offset_right = 782.00433
-offset_bottom = 297.9007
+offset_right = 782.0041
+offset_bottom = 297.90106
 rotation = 0.2
 evaluation_expression = "sqrt(x)"
 latex_expression = "\\sqrt{x}"
-drag_rotation_strength = null
-rotation_lerp_speed = null

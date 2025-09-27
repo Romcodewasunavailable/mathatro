@@ -24,10 +24,14 @@ extends Control
 		update_anchor_positions()
 @export var rotation_offset := 0.0
 @export var lerp_speed := 10.0
+@export var rotation_lerp_speed := 10.0
 
 var cards: Array[Card] = []
 var anchor_positions := PackedVector2Array()
-
+var dragging := false:
+	set(value):
+		dragging = value
+		update_anchor_positions()
 var arc_center: Vector2:
 	get():
 		return size / 2.0 + Vector2.DOWN * arc_radius
@@ -38,9 +42,17 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	for i in range(cards.size()):
-		cards[i].position = cards[i].position.lerp(anchor_positions[i] - Card.CARD_SIZE / 2.0, lerp_speed * delta)
-		cards[i].rotation = (cards[i].position + Card.CARD_SIZE / 2.0 - arc_center).angle() + PI / 2.0 + rotation_offset
+	var i = 0
+	for card in cards:
+		if card.dragging:
+			continue
+		card.position = card.position.lerp(anchor_positions[i] - Card.CARD_SIZE / 2.0, lerp_speed * delta)
+		card.rotation = lerp_angle(
+			card.rotation,
+			(card.position + Card.CARD_SIZE / 2.0 - arc_center).angle() + PI / 2.0 + rotation_offset,
+			rotation_lerp_speed * delta
+		)
+		i += 1
 
 
 func _on_resized() -> void:
@@ -51,12 +63,16 @@ func _on_child_entered_tree(node: Node) -> void:
 	if node is Card:
 		node.mouse_entered.connect(_on_card_mouse_entered.bind(node))
 		node.mouse_exited.connect(_on_card_mouse_exited.bind(node))
+		node.drag_started.connect(_on_card_drag_started.bind(node))
+		node.drag_ended.connect(_on_card_drag_ended.bind(node))
 
 
 func _on_child_exiting_tree(node: Node) -> void:
 	if node is Card:
 		node.mouse_entered.disconnect(_on_card_mouse_entered)
 		node.mouse_exited.disconnect(_on_card_mouse_exited)
+		node.drag_started.disconnect(_on_card_drag_started)
+		node.drag_ended.disconnect(_on_card_drag_ended)
 
 
 func _on_child_order_changed() -> void:
@@ -64,14 +80,21 @@ func _on_child_order_changed() -> void:
 
 
 func _on_card_mouse_entered(card: Card) -> void:
-	if card in cards:
+	if card in cards and not dragging:
 		selected_index = cards.find(card)
 
 
 func _on_card_mouse_exited(card: Card) -> void:
-	var card_index = cards.find(card)
-	if card_index == selected_index:
+	if cards.find(card) == selected_index and not dragging:
 		selected_index = -1
+
+
+func _on_card_drag_started(_card: Card) -> void:
+	dragging = true
+
+
+func _on_card_drag_ended(_card: Card) -> void:
+	dragging = false
 
 
 func update_cards() -> void:
@@ -83,12 +106,12 @@ func update_cards() -> void:
 
 
 func update_anchor_positions() -> void:
-	var num_cards = cards.size()
+	var num_cards = cards.size() - 1 if dragging else cards.size()
 	var arc_angle = min(card_angle * num_cards, max_angle)
 	anchor_positions.clear()
 	anchor_positions.resize(num_cards)
 	for i in range(num_cards):
-		var radius = arc_radius + selection_offset * int(i == selected_index)
+		var radius = arc_radius + selection_offset if i == selected_index and not dragging else arc_radius
 		anchor_positions[i] = arc_center + (Vector2.UP * radius).rotated(lerpf(
 			-arc_angle / 2.0,
 			arc_angle / 2.0,

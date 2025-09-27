@@ -2,6 +2,9 @@
 class_name Card
 extends Control
 
+signal drag_started()
+signal drag_ended()
+
 const CARD_SIZE = Vector2(200.0, 280.0)
 const CARD_SCENE = preload("res://scenes/card.tscn")
 
@@ -9,8 +12,6 @@ const CARD_SCENE = preload("res://scenes/card.tscn")
 	set(value):
 		evaluation_expression = value
 		var error = expression.parse(evaluation_expression, ["x"])
-		if latex_expression.is_empty() and is_node_ready():
-			update_latex()
 		if error != OK:
 			push_error(expression.get_error_text())
 @export_multiline var latex_expression: String:
@@ -24,8 +25,12 @@ const CARD_SCENE = preload("res://scenes/card.tscn")
 @export var latexture_rect: TextureRect
 
 var expression := Expression.new()
-var dragging := false
 var previous_position: Vector2
+var dragging := false:
+	set(value):
+		dragging = value
+		z_index = 1 if dragging else 0
+		(drag_started if dragging else drag_ended).emit()
 
 
 static func from_expression(evaluation_expression: String, latex_expression := "") -> Card:
@@ -40,18 +45,19 @@ func _ready() -> void:
 
 
 func _process(delta: float) -> void:
-	if get_parent() is Hand:
-		return
-
 	if previous_position == null:
 		previous_position = position
 	var velocity = (position - previous_position) / delta
-	rotation = lerpf(rotation, drag_rotation_strength * velocity.x, rotation_lerp_speed * delta)
 	previous_position = position
+
+	if dragging:
+		rotation = lerpf(rotation, drag_rotation_strength * velocity.x, rotation_lerp_speed * delta)
 
 
 func _input(event: InputEvent) -> void:
-	if dragging and event is InputEventMouseMotion:
+	if not dragging:
+		return
+	if event is InputEventMouseMotion:
 		position += event.relative
 	elif event.is_action_released("click"):
 		dragging = false
@@ -59,18 +65,20 @@ func _input(event: InputEvent) -> void:
 
 func _gui_input(event: InputEvent) -> void:
 	if event.is_action_pressed("click"):
-		var parent = get_parent()
-		if parent is Hand and self == parent.get_child(parent.selected_index):
-			reparent(parent.get_parent())
 		dragging = true
 
 
 func update_latex() -> void:
-	latexture_rect.LatexExpression = evaluation_expression if latex_expression.is_empty() else latex_expression
+	latexture_rect.LatexExpression = latex_expression
 	latexture_rect.Render()
 
 
-func evaluate(x: float) -> float:
+func compose(other: Card) -> void:
+	evaluation_expression = evaluation_expression.replace("x", "(%s)" % other.evaluation_expression)
+	latex_expression = latex_expression.replace("x", "(%s)" % other.latex_expression)
+
+
+func evaluate(x: float = 0.0) -> float:
 	var result = expression.execute([x], ExpressionContext)
 	if expression.has_execute_failed():
 		push_error(expression.get_error_text())
