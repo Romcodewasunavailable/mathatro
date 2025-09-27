@@ -9,6 +9,8 @@ corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 4
 
 [sub_resource type="Image" id="Image_6u4wf"]
 data = {
@@ -22,22 +24,25 @@ data = {
 [sub_resource type="ImageTexture" id="ImageTexture_ktuci"]
 image = SubResource("Image_6u4wf")
 
-[node name="Card" type="Node2D" node_paths=PackedStringArray("latexture_rect")]
+[node name="Card" type="Control" node_paths=PackedStringArray("latexture_rect")]
+custom_minimum_size = Vector2(200, 280)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 200.0
+offset_bottom = 280.0
+pivot_offset = Vector2(100, 140)
+mouse_filter = 1
 script = ExtResource("1_6u4wf")
 latexture_rect = NodePath("PanelContainer/MarginContainer/LaTeXtureRect")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -100.0
-offset_top = -140.0
-offset_right = 100.0
-offset_bottom = 140.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_d81rb")
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]

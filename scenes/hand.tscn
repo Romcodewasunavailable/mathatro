@@ -1,47 +1,25 @@
-[gd_scene load_steps=3 format=3 uid="uid://c35tktyy00ora"]
+[gd_scene load_steps=2 format=3 uid="uid://c35tktyy00ora"]
 
 [ext_resource type="Script" uid="uid://gifc4lhi2c0b" path="res://scripts/hand.gd" id="1_eyfoh"]
-[ext_resource type="PackedScene" uid="uid://c17rca2e0emfn" path="res://scenes/card.tscn" id="2_cmdsa"]
 
 [node name="Hand" type="Control"]
+custom_minimum_size = Vector2(768, 256)
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
 anchor_bottom = 1.0
+offset_left = -384.0
+offset_top = -256.0
+offset_right = 384.0
 grow_horizontal = 2
-grow_vertical = 2
+grow_vertical = 0
 size_flags_horizontal = 4
 size_flags_vertical = 8
 script = ExtResource("1_eyfoh")
 
-[node name="Card2" parent="." instance=ExtResource("2_cmdsa")]
-position = Vector2(150, 540)
-evaluation_expression = "1.0 / x"
-latex_expression = "\\frac{1}{x}"
-
-[node name="Card3" parent="." instance=ExtResource("2_cmdsa")]
-position = Vector2(474, 540)
-evaluation_expression = "x * 2"
-latex_expression = "2x"
-
-[node name="Card4" parent="." instance=ExtResource("2_cmdsa")]
-position = Vector2(798, 540)
-evaluation_expression = "x ** 3"
-latex_expression = "x^3"
-
-[node name="Card6" parent="." instance=ExtResource("2_cmdsa")]
-position = Vector2(1122, 540)
-evaluation_expression = "sqrt(x)"
-latex_expression = "\\sqrt{x}"
-
-[node name="Card" parent="." instance=ExtResource("2_cmdsa")]
-position = Vector2(1446, 540)
-evaluation_expression = "x + 5"
-
-[node name="Card5" parent="." instance=ExtResource("2_cmdsa")]
-position = Vector2(1770, 540)
-evaluation_expression = "abs(x)"
-latex_expression = "|x|"
-
+[connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
+[connection signal="child_exiting_tree" from="." to="." method="_on_child_exiting_tree"]
 [connection signal="child_order_changed" from="." to="." method="_on_child_order_changed"]
 [connection signal="resized" from="." to="." method="_on_resized"]
