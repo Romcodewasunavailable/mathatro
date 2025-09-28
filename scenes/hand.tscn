@@ -19,7 +19,7 @@ size_flags_horizontal = 4
 size_flags_vertical = 8
 script = ExtResource("1_eyfoh")
 
+[connection signal="cards_changed" from="." to="." method="_on_cards_changed"]
 [connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
 [connection signal="child_exiting_tree" from="." to="." method="_on_child_exiting_tree"]
-[connection signal="child_order_changed" from="." to="." method="_on_child_order_changed"]
 [connection signal="resized" from="." to="." method="_on_resized"]

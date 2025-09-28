@@ -2,11 +2,14 @@
 class_name Card
 extends Control
 
-signal drag_started()
-signal drag_ended()
+signal hovering_changed()
+signal dragging_changed()
 
 const CARD_SIZE = Vector2(200.0, 280.0)
 const CARD_SCENE = preload("res://scenes/card.tscn")
+
+static var hovering: Card
+static var dragging: Card
 
 @export_multiline var evaluation_expression: String:
 	set(value):
@@ -26,11 +29,6 @@ const CARD_SCENE = preload("res://scenes/card.tscn")
 
 var expression := Expression.new()
 var previous_position: Vector2
-var dragging := false:
-	set(value):
-		dragging = value
-		z_index = 1 if dragging else 0
-		(drag_started if dragging else drag_ended).emit()
 
 
 static func from_expression(evaluation_expression: String, latex_expression := "") -> Card:
@@ -48,24 +46,45 @@ func _process(delta: float) -> void:
 	if previous_position == null:
 		previous_position = position
 	var velocity = (position - previous_position) / delta
+	if velocity.length() * delta > 250.0:
+		print(velocity.length() * delta)
+		velocity = Vector2.ZERO
 	previous_position = position
 
-	if dragging:
+	if dragging or get_parent() is not Hand:
 		rotation = lerpf(rotation, drag_rotation_strength * velocity.x, rotation_lerp_speed * delta)
 
 
 func _input(event: InputEvent) -> void:
-	if not dragging:
-		return
-	if event is InputEventMouseMotion:
-		position += event.relative
+	if hovering == self and event.is_action_pressed("click") and get_parent() is not Stack:
+		dragging = self
+		z_index = 1
+		dragging_changed.emit()
 	elif event.is_action_released("click"):
-		dragging = false
+		if dragging == self:
+			dragging = null
+			z_index = 0
+			dragging_changed.emit()
+			if hovering == self:
+				hovering = null
+				hovering_changed.emit()
+			elif hovering != null and hovering.get_parent() is Stack:
+				reparent(hovering.get_parent())
+				compose(hovering)
+	elif dragging == self and event is InputEventMouseMotion:
+		position += event.relative
 
 
-func _gui_input(event: InputEvent) -> void:
-	if event.is_action_pressed("click"):
-		dragging = true
+func _on_mouse_entered():
+	if dragging == null or get_parent() is not Hand:
+		hovering = self
+		hovering_changed.emit()
+
+
+func _on_mouse_exited():
+	if hovering == self:
+		hovering = null
+		hovering_changed.emit()
 
 
 func update_latex() -> void:

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://ksr61t6b6e1k"]
+[gd_scene load_steps=4 format=3 uid="uid://ksr61t6b6e1k"]
 
 [ext_resource type="PackedScene" uid="uid://c35tktyy00ora" path="res://scenes/hand.tscn" id="1_yqjtg"]
 [ext_resource type="PackedScene" uid="uid://c17rca2e0emfn" path="res://scenes/card.tscn" id="2_lnu2h"]
+[ext_resource type="PackedScene" uid="uid://ctcvyfbittufg" path="res://scenes/stack.tscn" id="3_lnu2h"]
 
 [node name="Game" type="Control"]
 layout_mode = 3
@@ -18,8 +19,8 @@ layout_mode = 1
 layout_mode = 0
 offset_left = -14.003998
 offset_top = 17.900146
-offset_right = 185.99652
-offset_bottom = 297.90106
+offset_right = 185.99649
+offset_bottom = 297.901
 rotation = -0.19999997
 evaluation_expression = "x + 5"
 latex_expression = "x + 5"
@@ -28,8 +29,8 @@ latex_expression = "x + 5"
 layout_mode = 0
 offset_left = 104.4317
 offset_top = -1.2130127
-offset_right = 304.43182
-offset_bottom = 278.7881
+offset_right = 304.43195
+offset_bottom = 278.78796
 rotation = -0.11999993
 evaluation_expression = "1.0 / x"
 latex_expression = "\\frac{1}{x}"
@@ -38,7 +39,7 @@ latex_expression = "\\frac{1}{x}"
 layout_mode = 0
 offset_left = 224.01599
 offset_top = -10.800171
-offset_right = 424.0182
+offset_right = 424.01855
 offset_bottom = 269.20093
 rotation = -0.040000007
 evaluation_expression = "x * 2"
@@ -48,7 +49,7 @@ latex_expression = "2x"
 layout_mode = 0
 offset_left = 343.984
 offset_top = -10.800171
-offset_right = 543.9861
+offset_right = 543.9857
 offset_bottom = 269.20093
 rotation = 0.040000036
 evaluation_expression = "x ** 3"
@@ -58,8 +59,8 @@ latex_expression = "x^3"
 layout_mode = 0
 offset_left = 463.5683
 offset_top = -1.2130127
-offset_right = 663.5687
-offset_bottom = 278.7881
+offset_right = 663.5691
+offset_bottom = 278.78796
 rotation = 0.11999996
 evaluation_expression = "abs(x)"
 latex_expression = "|x|"
@@ -68,8 +69,27 @@ latex_expression = "|x|"
 layout_mode = 0
 offset_left = 582.004
 offset_top = 17.900146
-offset_right = 782.0041
-offset_bottom = 297.90106
+offset_right = 782.0047
+offset_bottom = 297.901
 rotation = 0.2
 evaluation_expression = "sqrt(x)"
 latex_expression = "\\sqrt{x}"
+
+[node name="Stack" parent="." instance=ExtResource("3_lnu2h")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -140.0
+offset_right = 100.0
+offset_bottom = 140.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Card" parent="Stack" instance=ExtResource("2_lnu2h")]
+layout_mode = 1
+evaluation_expression = "3"
+latex_expression = "3"
