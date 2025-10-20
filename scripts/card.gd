@@ -11,30 +11,39 @@ const CARD_SCENE = preload("res://scenes/card.tscn")
 static var hovering: Card
 static var dragging: Card
 
-@export_multiline var evaluation_expression: String:
+@export var card_expression: CardExpression:
 	set(value):
-		evaluation_expression = value
-		var error = expression.parse(evaluation_expression, ["x"])
-		if error != OK:
-			push_error(expression.get_error_text())
-@export_multiline var latex_expression: String:
-	set(value):
-		latex_expression = value
+		if card_expression != null:
+			card_expression.changed.disconnect(update_latex)
+		card_expression = value
+		if card_expression != null:
+			card_expression.changed.connect(update_latex)
 		if is_node_ready():
 			update_latex()
+@export var face_up := false:
+	set(value):
+		if value == face_up:
+			return
+		face_up = value
+		if not is_node_ready():
+			$PanelContainer/BackFaceTextureRect.visible = not face_up
+		elif face_up:
+			animation_player.play("face_up")
+		else:
+			animation_player.play_backwards("face_up")
+
 @export var drag_rotation_strength := 0.0001
 @export var rotation_lerp_speed := 10.0
 
 @export var latexture_rect: TextureRect
+@export var animation_player: AnimationPlayer
 
-var expression := Expression.new()
 var previous_position: Vector2
 
 
-static func from_expression(evaluation_expression: String, latex_expression := "") -> Card:
+static func from_expression(card_expression: CardExpression) -> Card:
 	var new_card: Card = CARD_SCENE.instantiate()
-	new_card.evaluation_expression = evaluation_expression
-	new_card.latex_expression = latex_expression
+	new_card.card_expression = card_expression
 	return new_card
 
 
@@ -47,11 +56,10 @@ func _process(delta: float) -> void:
 		previous_position = position
 	var velocity = (position - previous_position) / delta
 	if velocity.length() * delta > 250.0:
-		print(velocity.length() * delta)
 		velocity = Vector2.ZERO
 	previous_position = position
 
-	if dragging or get_parent() is not Hand:
+	if dragging == self or get_parent() is not Hand:
 		rotation = lerpf(rotation, drag_rotation_strength * velocity.x, rotation_lerp_speed * delta)
 
 
@@ -88,18 +96,14 @@ func _on_mouse_exited():
 
 
 func update_latex() -> void:
-	latexture_rect.LatexExpression = latex_expression
+	latexture_rect.LatexExpression = card_expression.latex if card_expression != null else ""
 	latexture_rect.Render()
 
 
 func compose(other: Card) -> void:
-	evaluation_expression = evaluation_expression.replace("x", "(%s)" % other.evaluation_expression)
-	latex_expression = latex_expression.replace("x", "(%s)" % other.latex_expression)
+	if card_expression != null and other.card_expression != null:
+		card_expression.compose(other.card_expression)
 
 
 func evaluate(x: float = 0.0) -> float:
-	var result = expression.execute([x], ExpressionContext)
-	if expression.has_execute_failed():
-		push_error(expression.get_error_text())
-		return 0.0
-	return result
+	return card_expression.evaluate(x) if card_expression != null else 0.0

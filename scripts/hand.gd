@@ -86,6 +86,6 @@ func update_anchor_positions() -> void:
 		anchor_positions[j] = arc_center + (Vector2.UP * radius).rotated(lerpf(
 			-arc_angle / 2.0,
 			arc_angle / 2.0,
-			j / float(hand_size - 1)
+			j / float(hand_size - 1) if hand_size > 1 else 0.5
 		) / absf(radius))
 		j += 1

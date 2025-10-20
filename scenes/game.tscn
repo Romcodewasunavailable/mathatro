@@ -1,8 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://ksr61t6b6e1k"]
+[gd_scene load_steps=7 format=3 uid="uid://ksr61t6b6e1k"]
 
 [ext_resource type="PackedScene" uid="uid://c35tktyy00ora" path="res://scenes/hand.tscn" id="1_yqjtg"]
 [ext_resource type="PackedScene" uid="uid://c17rca2e0emfn" path="res://scenes/card.tscn" id="2_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://ctcvyfbittufg" path="res://scenes/stack.tscn" id="3_lnu2h"]
+[ext_resource type="Script" uid="uid://dkcni75ogr2o4" path="res://scripts/card_expression.gd" id="4_lbhrr"]
+
+[sub_resource type="Resource" id="Resource_iywne"]
+script = ExtResource("4_lbhrr")
+raw = "3 * x"
+latex = "3x"
+metadata/_custom_type_script = "uid://dkcni75ogr2o4"
+
+[sub_resource type="Resource" id="Resource_lbhrr"]
+script = ExtResource("4_lbhrr")
+raw = "3"
+latex = "3"
+metadata/_custom_type_script = "uid://dkcni75ogr2o4"
 
 [node name="Game" type="Control"]
 layout_mode = 3
@@ -22,8 +35,7 @@ offset_top = 17.900146
 offset_right = 185.99649
 offset_bottom = 297.901
 rotation = -0.19999997
-evaluation_expression = "x + 5"
-latex_expression = "x + 5"
+face_up = true
 
 [node name="Card2" parent="Hand" instance=ExtResource("2_lnu2h")]
 layout_mode = 0
@@ -32,8 +44,7 @@ offset_top = -1.2130127
 offset_right = 304.43195
 offset_bottom = 278.78796
 rotation = -0.11999993
-evaluation_expression = "1.0 / x"
-latex_expression = "\\frac{1}{x}"
+face_up = true
 
 [node name="Card3" parent="Hand" instance=ExtResource("2_lnu2h")]
 layout_mode = 0
@@ -42,8 +53,7 @@ offset_top = -10.800171
 offset_right = 424.01855
 offset_bottom = 269.20093
 rotation = -0.040000007
-evaluation_expression = "x * 2"
-latex_expression = "2x"
+face_up = true
 
 [node name="Card4" parent="Hand" instance=ExtResource("2_lnu2h")]
 layout_mode = 0
@@ -52,8 +62,7 @@ offset_top = -10.800171
 offset_right = 543.9857
 offset_bottom = 269.20093
 rotation = 0.040000036
-evaluation_expression = "x ** 3"
-latex_expression = "x^3"
+face_up = true
 
 [node name="Card5" parent="Hand" instance=ExtResource("2_lnu2h")]
 layout_mode = 0
@@ -62,8 +71,7 @@ offset_top = -1.2130127
 offset_right = 663.5691
 offset_bottom = 278.78796
 rotation = 0.11999996
-evaluation_expression = "abs(x)"
-latex_expression = "|x|"
+face_up = true
 
 [node name="Card6" parent="Hand" instance=ExtResource("2_lnu2h")]
 layout_mode = 0
@@ -72,8 +80,8 @@ offset_top = 17.900146
 offset_right = 782.0047
 offset_bottom = 297.901
 rotation = 0.2
-evaluation_expression = "sqrt(x)"
-latex_expression = "\\sqrt{x}"
+card_expression = SubResource("Resource_iywne")
+face_up = true
 
 [node name="Stack" parent="." instance=ExtResource("3_lnu2h")]
 layout_mode = 1
@@ -91,5 +99,5 @@ grow_vertical = 2
 
 [node name="Card" parent="Stack" instance=ExtResource("2_lnu2h")]
 layout_mode = 1
-evaluation_expression = "3"
-latex_expression = "3"
+card_expression = SubResource("Resource_lbhrr")
+face_up = true
