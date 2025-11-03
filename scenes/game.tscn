@@ -1,9 +1,21 @@
-[gd_scene load_steps=7 format=3 uid="uid://ksr61t6b6e1k"]
+[gd_scene load_steps=12 format=3 uid="uid://ksr61t6b6e1k"]
 
+[ext_resource type="Script" uid="uid://biwfsskm4h42l" path="res://scripts/game.gd" id="1_iywne"]
 [ext_resource type="PackedScene" uid="uid://c35tktyy00ora" path="res://scenes/hand.tscn" id="1_yqjtg"]
 [ext_resource type="PackedScene" uid="uid://c17rca2e0emfn" path="res://scenes/card.tscn" id="2_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://ctcvyfbittufg" path="res://scenes/stack.tscn" id="3_lnu2h"]
+[ext_resource type="Script" uid="uid://dcky4oisx2cv3" path="res://scripts/round.gd" id="3_u5sy4"]
+[ext_resource type="Script" uid="uid://cgyc00rda7ajx" path="res://scripts/set_expression.gd" id="4_gee14"]
 [ext_resource type="Script" uid="uid://dkcni75ogr2o4" path="res://scripts/card_expression.gd" id="4_lbhrr"]
+
+[sub_resource type="Resource" id="Resource_0tnpc"]
+script = ExtResource("4_gee14")
+metadata/_custom_type_script = "uid://cgyc00rda7ajx"
+
+[sub_resource type="Resource" id="Resource_vtaks"]
+script = ExtResource("3_u5sy4")
+target_set = SubResource("Resource_0tnpc")
+metadata/_custom_type_script = "uid://dcky4oisx2cv3"
 
 [sub_resource type="Resource" id="Resource_iywne"]
 script = ExtResource("4_lbhrr")
@@ -24,6 +36,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_iywne")
+round = SubResource("Resource_vtaks")
 
 [node name="Hand" parent="." instance=ExtResource("1_yqjtg")]
 layout_mode = 1
