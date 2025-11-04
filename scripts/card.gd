@@ -83,18 +83,6 @@ func _input(event: InputEvent) -> void:
 		position += event.relative
 
 
-func _on_mouse_entered():
-	if dragging == null or get_parent() is not Hand:
-		hovering = self
-		hovering_changed.emit()
-
-
-func _on_mouse_exited():
-	if hovering == self:
-		hovering = null
-		hovering_changed.emit()
-
-
 func update_latex() -> void:
 	latexture_rect.LatexExpression = card_expression.latex if card_expression != null else ""
 	latexture_rect.Render()
@@ -107,3 +95,15 @@ func compose(other: Card) -> void:
 
 func evaluate(x: float = 0.0) -> float:
 	return card_expression.evaluate(x) if card_expression != null else 0.0
+
+
+func _on_mouse_entered():
+	if dragging == null or get_parent() is not Hand:
+		hovering = self
+		hovering_changed.emit()
+
+
+func _on_mouse_exited():
+	if hovering == self:
+		hovering = null
+		hovering_changed.emit()

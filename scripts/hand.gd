@@ -42,6 +42,27 @@ func _process(delta: float) -> void:
 		i += 1
 
 
+func update_anchor_positions() -> void:
+	var num_cards = cards.size()
+	var hand_size = num_cards - 1 if Card.dragging in cards else cards.size()
+	var arc_angle = min(card_angle * hand_size, max_angle)
+	anchor_positions.clear()
+	anchor_positions.resize(hand_size)
+	var j = 0
+	for i in range(num_cards):
+		if Card.dragging == cards[i]:
+			continue
+		var radius = arc_radius
+		if Card.hovering == cards[i]:
+			radius += selection_offset
+		anchor_positions[j] = arc_center + (Vector2.UP * radius).rotated(lerpf(
+			-arc_angle / 2.0,
+			arc_angle / 2.0,
+			j / float(hand_size - 1) if hand_size > 1 else 0.5
+		) / absf(radius))
+		j += 1
+
+
 func _on_child_entered_tree(node: Node) -> void:
 	if node is Card:
 		node.hovering_changed.connect(_on_card_hovering_changed)
@@ -68,24 +89,3 @@ func _on_card_hovering_changed() -> void:
 
 func _on_card_dragging_changed() -> void:
 	update_anchor_positions()
-
-
-func update_anchor_positions() -> void:
-	var num_cards = cards.size()
-	var hand_size = num_cards - 1 if Card.dragging in cards else cards.size()
-	var arc_angle = min(card_angle * hand_size, max_angle)
-	anchor_positions.clear()
-	anchor_positions.resize(hand_size)
-	var j = 0
-	for i in range(num_cards):
-		if Card.dragging == cards[i]:
-			continue
-		var radius = arc_radius
-		if Card.hovering == cards[i]:
-			radius += selection_offset
-		anchor_positions[j] = arc_center + (Vector2.UP * radius).rotated(lerpf(
-			-arc_angle / 2.0,
-			arc_angle / 2.0,
-			j / float(hand_size - 1) if hand_size > 1 else 0.5
-		) / absf(radius))
-		j += 1

@@ -12,13 +12,13 @@ func _ready() -> void:
 	update_cards()
 
 
-func _on_child_order_changed() -> void:
-	update_cards()
-
-
 func update_cards() -> void:
 	cards.clear()
 	for child in get_children():
 		if child is Card:
 			cards.append(child)
 	cards_changed.emit()
+
+
+func _on_child_order_changed() -> void:
+	update_cards()

@@ -1,5 +1,5 @@
 @tool
-class_name SetExpression
+class_name GoalExpression
 extends Resource
 
 @export_multiline var raw: String:
@@ -17,14 +17,9 @@ extends Resource
 var expression := Expression.new()
 
 
-func compose(other: CardExpression) -> void:
-	raw = raw.replace("x", "(%s)" % other.raw)
-	latex = latex.replace("x", "(%s)" % other.latex)
-
-
-func evaluate(x: float = 0.0) -> float:
+func evaluate(x: float = 0.0) -> bool:
 	var result = expression.execute([x], ExpressionContext)
 	if expression.has_execute_failed():
 		push_error(expression.get_error_text())
-		return 0.0
+		return false
 	return result

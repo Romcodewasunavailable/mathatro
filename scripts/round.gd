@@ -2,13 +2,13 @@
 class_name Round
 extends Resource
 
-@export var target_set: SetExpression:
+@export var goal: GoalExpression:
 	set(value):
-		if target_set != null:
-			target_set.changed.disconnect(emit_changed)
-		target_set = value
-		if target_set != null:
-			target_set.changed.connect(emit_changed)
+		if goal != null:
+			goal.changed.disconnect(emit_changed)
+		goal = value
+		if goal != null:
+			goal.changed.connect(emit_changed)
 @export var cards: Array[CardExpression]:
 	set(value):
 		cards = value
