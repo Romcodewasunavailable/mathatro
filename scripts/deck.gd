@@ -2,7 +2,7 @@
 class_name Deck
 extends Control
 
-@export var card_expressions: Array[CardExpression]:
+@export var card_expressions: Array[LatexExpression]:
 	set(value):
 		card_expressions = value
 		update_cards()

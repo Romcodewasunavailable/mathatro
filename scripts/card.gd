@@ -11,22 +11,20 @@ const CARD_SCENE = preload("res://scenes/card.tscn")
 static var hovering: Card
 static var dragging: Card
 
-@export var card_expression: CardExpression:
+@export var expression: LatexExpression:
 	set(value):
-		if card_expression != null:
-			card_expression.changed.disconnect(update_latex)
-		card_expression = value
-		if card_expression != null:
-			card_expression.changed.connect(update_latex)
+		if expression != null:
+			expression.changed.disconnect(update_latex)
+		expression = value
+		if expression != null:
+			expression.changed.connect(update_latex)
 		if is_node_ready():
 			update_latex()
-@export var face_up := false:
+@export var face_up := true:
 	set(value):
-		if value == face_up:
-			return
 		face_up = value
 		if not is_node_ready():
-			$PanelContainer/BackFaceTextureRect.visible = not face_up
+			return
 		elif face_up:
 			animation_player.play("face_up")
 		else:
@@ -36,19 +34,21 @@ static var dragging: Card
 @export var rotation_lerp_speed := 10.0
 
 @export var latexture_rect: TextureRect
+@export var back_face: Control
 @export var animation_player: AnimationPlayer
 
 var previous_position: Vector2
 
 
-static func from_expression(card_expression: CardExpression) -> Card:
+static func from_expression(expression: LatexExpression) -> Card:
 	var new_card: Card = CARD_SCENE.instantiate()
-	new_card.card_expression = card_expression
+	new_card.expression = expression
 	return new_card
 
 
 func _ready() -> void:
 	update_latex()
+	back_face.visible = not face_up
 
 
 func _process(delta: float) -> void:
@@ -84,17 +84,17 @@ func _input(event: InputEvent) -> void:
 
 
 func update_latex() -> void:
-	latexture_rect.LatexExpression = card_expression.latex if card_expression != null else ""
+	latexture_rect.LatexExpression = expression.latex if expression != null else ""
 	latexture_rect.Render()
 
 
 func compose(other: Card) -> void:
-	if card_expression != null and other.card_expression != null:
-		card_expression.compose(other.card_expression)
+	if expression != null and other.expression != null:
+		expression.compose(other.expression)
 
 
-func evaluate(x: float = 0.0) -> float:
-	return card_expression.evaluate(x) if card_expression != null else 0.0
+func evaluate(x: Variant = 0.0) -> Variant:
+	return expression.evaluate(x) if expression != null else 0.0
 
 
 func _on_mouse_entered():

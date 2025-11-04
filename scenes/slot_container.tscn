@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://na4emwrurpym"]
+
+[ext_resource type="Script" uid="uid://b80tjb1u4o75b" path="res://scripts/slot_container.gd" id="1_vgy2j"]
+
+[node name="SlotContainer" type="HBoxContainer"]
+script = ExtResource("1_vgy2j")

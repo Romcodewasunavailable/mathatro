@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://4wdkgigac0f2"]
+
+[ext_resource type="Script" uid="uid://py7jaicd24ss" path="res://scripts/level_square.gd" id="1_i0sit"]
+
+[node name="LevelButton" type="Button"]
+custom_minimum_size = Vector2(192, 192)
+offset_right = 8.0
+offset_bottom = 8.0
+theme_override_font_sizes/font_size = 64
+text = "1"
+script = ExtResource("1_i0sit")

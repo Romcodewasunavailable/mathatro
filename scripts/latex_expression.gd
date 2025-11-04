@@ -1,5 +1,5 @@
 @tool
-class_name GoalExpression
+class_name LatexExpression
 extends Resource
 
 @export_multiline var raw: String:
@@ -17,9 +17,14 @@ extends Resource
 var expression := Expression.new()
 
 
-func evaluate(x: float = 0.0) -> bool:
+func compose(other: LatexExpression) -> void:
+	raw = raw.replace("x", "(%s)" % other.raw)
+	latex = latex.replace("x", "(%s)" % other.latex)
+
+
+func evaluate(x: Variant = 0.0) -> Variant:
 	var result = expression.execute([x], ExpressionContext)
 	if expression.has_execute_failed():
 		push_error(expression.get_error_text())
-		return false
+		return 0.0
 	return result
