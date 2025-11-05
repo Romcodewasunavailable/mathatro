@@ -42,7 +42,3 @@ enum Status {
 			if expression != null:
 				expression.changed.connect(emit_changed)
 		emit_changed()
-@export var unlocks: PackedStringArray:
-	set(value):
-		unlocks = value
-		emit_changed()

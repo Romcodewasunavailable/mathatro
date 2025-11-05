@@ -11,13 +11,14 @@ config_version=5
 [application]
 
 config/name="Mathatro"
-run/main_scene="uid://ksr61t6b6e1k"
+run/main_scene="uid://c4whrh7kep8br"
 config/features=PackedStringArray("4.5", "C#", "Forward Plus")
 config/icon="res://visuals/icon.svg"
 
 [autoload]
 
 ExpressionContext="*res://scripts/expression_context.gd"
+Save="*res://scripts/save.gd"
 
 [debug]
 

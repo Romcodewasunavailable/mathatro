@@ -1,0 +1,53 @@
+[gd_scene load_steps=6 format=3 uid="uid://ksr61t6b6e1k"]
+
+[ext_resource type="Script" uid="uid://biwfsskm4h42l" path="res://scripts/playfield.gd" id="1_i5fcf"]
+[ext_resource type="Resource" uid="uid://pru8l3u4r7d7" path="res://levels/test_level.tres" id="2_g3xb0"]
+[ext_resource type="PackedScene" uid="uid://c35tktyy00ora" path="res://scenes/hand.tscn" id="3_xs6qu"]
+[ext_resource type="PackedScene" uid="uid://ctcvyfbittufg" path="res://scenes/stack.tscn" id="4_2johs"]
+[ext_resource type="PackedScene" uid="uid://na4emwrurpym" path="res://scenes/slot_container.tscn" id="5_k06pt"]
+
+[node name="Playfield" type="Control" node_paths=PackedStringArray("hand", "stack", "slot_container")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_i5fcf")
+level = ExtResource("2_g3xb0")
+hand = NodePath("Hand")
+stack = NodePath("HBoxContainer/Stack")
+slot_container = NodePath("HBoxContainer/SlotContainer")
+
+[node name="Hand" parent="." instance=ExtResource("3_xs6qu")]
+layout_mode = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Stack" parent="HBoxContainer" instance=ExtResource("4_2johs")]
+layout_mode = 2
+
+[node name="TextureButton" type="TextureButton" parent="HBoxContainer"]
+layout_mode = 2
+
+[node name="SlotContainer" parent="HBoxContainer" instance=ExtResource("5_k06pt")]
+layout_mode = 2
+
+[connection signal="mouse_entered" from="Hand/@Control@39344" to="Hand/@Control@39344" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Hand/@Control@39344" to="Hand/@Control@39344" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="Hand/@Control@39345" to="Hand/@Control@39345" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Hand/@Control@39345" to="Hand/@Control@39345" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="HBoxContainer/Stack/@Control@39346" to="HBoxContainer/Stack/@Control@39346" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="HBoxContainer/Stack/@Control@39346" to="HBoxContainer/Stack/@Control@39346" method="_on_mouse_exited"]
