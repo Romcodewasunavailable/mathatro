@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://clrw00gs4187u" path="res://scripts/level_select.gd" id="1_3shnc"]
 
-[node name="LevelSelect" type="Control" node_paths=PackedStringArray("level_button_container")]
+[node name="LevelSelect" type="Control" node_paths=PackedStringArray("level_square_container")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -10,7 +10,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_3shnc")
-level_button_container = NodePath("GridContainer")
+level_square_container = NodePath("GridContainer")
 
 [node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 1

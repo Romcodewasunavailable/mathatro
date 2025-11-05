@@ -1,0 +1,68 @@
+[gd_scene load_steps=4 format=3 uid="uid://4wdkgigac0f2"]
+
+[ext_resource type="Script" uid="uid://py7jaicd24ss" path="res://scripts/level_square.gd" id="1_05xgf"]
+[ext_resource type="Texture2D" uid="uid://kdvbednvp5w6" path="res://visuals/lock.png" id="1_e4b4b"]
+[ext_resource type="Texture2D" uid="uid://dr16l81lwwmlh" path="res://visuals/check.png" id="2_m25mo"]
+
+[node name="LevelSquare" type="Control" node_paths=PackedStringArray("play_button", "lock_texture_rect", "check_texture_rect")]
+custom_minimum_size = Vector2(192, 192)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_05xgf")
+play_button = NodePath("PlayButton")
+lock_texture_rect = NodePath("LockTextureRect")
+check_texture_rect = NodePath("CheckTextureRect")
+
+[node name="PlayButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 8
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 80
+text = "1"
+
+[node name="LockTextureRect" type="TextureRect" parent="."]
+visible = false
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -48.0
+offset_top = -48.0
+offset_right = 48.0
+offset_bottom = 48.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_e4b4b")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CheckTextureRect" type="TextureRect" parent="."]
+visible = false
+custom_minimum_size = Vector2(96, 96)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 16.0
+offset_top = -112.0
+offset_right = 112.000046
+offset_bottom = -16.0
+grow_horizontal = 2
+grow_vertical = 2
+rotation = 0.2617994
+pivot_offset = Vector2(48, 48)
+texture = ExtResource("2_m25mo")
+expand_mode = 1
+stretch_mode = 5

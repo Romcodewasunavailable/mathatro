@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://rwc1knw3twp" path="res://scripts/card.gd" id="1_6u4wf"]
 [ext_resource type="Script" uid="uid://b607e4166x31h" path="res://addons/GodoTeX/LaTeXtureRect.cs" id="2_6u4wf"]
-[ext_resource type="Texture2D" uid="uid://38ltgk74rhi5" path="res://icon.svg" id="3_ktuci"]
+[ext_resource type="Texture2D" uid="uid://38ltgk74rhi5" path="res://visuals/icon.svg" id="3_ktuci"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_d81rb"]
 bg_color = Color(1, 1, 1, 1)

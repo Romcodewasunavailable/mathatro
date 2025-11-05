@@ -1,18 +1,30 @@
 @tool
-class_name LevelButton
-extends Button
+class_name LevelSquare
+extends Control
 
+@export var level_path := ""
 @export var number := 1:
 	set(value):
 		number = value
-		text = str(number)
-@export var level_path := ""
+		#if is_node_ready():
+		update_visuals()
 @export var status := Level.Status.AVAILABLE:
 	set(value):
 		status = value
-		disabled = status == Level.Status.LOCKED
+		#if is_node_ready():
+		update_visuals()
+
+@export var play_button: Button
+@export var lock_texture_rect: TextureRect
+@export var check_texture_rect: TextureRect
 
 
-func _init(number := 1, level_path := "") -> void:
-	self.number = number
-	self.level_path = level_path
+#func _ready() -> void:
+	#update_visuals()
+
+
+func update_visuals() -> void:
+	play_button.disabled = status == Level.Status.LOCKED
+	play_button.text = "" if status == Level.Status.LOCKED else str(number)
+	lock_texture_rect.visible = status == Level.Status.LOCKED
+	check_texture_rect.visible  = status == Level.Status.COMPLETED
