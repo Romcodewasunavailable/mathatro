@@ -6,21 +6,21 @@ extends Control
 @export var number := 1:
 	set(value):
 		number = value
-		#if is_node_ready():
-		update_visuals()
+		if is_node_ready():
+			update_visuals()
 @export var status := Level.Status.AVAILABLE:
 	set(value):
 		status = value
-		#if is_node_ready():
-		update_visuals()
+		if is_node_ready():
+			update_visuals()
 
 @export var play_button: Button
 @export var lock_texture_rect: TextureRect
 @export var check_texture_rect: TextureRect
 
 
-#func _ready() -> void:
-	#update_visuals()
+func _ready() -> void:
+	update_visuals()
 
 
 func update_visuals() -> void:

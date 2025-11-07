@@ -2,11 +2,15 @@
 class_name Level
 extends Resource
 
+const DIR_PATH = "res://levels"
+
 enum Status {
 	LOCKED,
 	AVAILABLE,
 	COMPLETED,
 }
+
+static var file_names: PackedStringArray
 
 @export var start_value: LatexExpression:
 	set(value):
@@ -42,3 +46,7 @@ enum Status {
 			if expression != null:
 				expression.changed.connect(emit_changed)
 		emit_changed()
+
+
+static func _static_init() -> void:
+	file_names = DirAccess.get_files_at(DIR_PATH)

@@ -10,6 +10,11 @@ extends Control
 @export var slot_container: SlotContainer
 
 
+func _ready() -> void:
+	if level != null:
+		start_level()
+
+
 func clear() -> void:
 	for card in hand.get_children():
 		card.queue_free()

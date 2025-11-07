@@ -4,10 +4,23 @@ extends Control
 
 const PLAYFIELD_SCENE = preload("res://scenes/playfield.tscn")
 
+@export var play_button: Button
+
+
+func _ready() -> void:
+	if Save.data.level_statuses[Level.file_names[0]] == Level.Status.COMPLETED:
+		play_button.text = "Continue"
+
 
 func _on_play_button_pressed() -> void:
 	var playfield: Playfield = PLAYFIELD_SCENE.instantiate()
-	playfield.level = load(SaveData.level_paths[0])
+
+	for i in range(Level.file_names.size() - 1, -1, -1):
+		var file_name = Level.file_names[i]
+		if Save.data.level_statuses[file_name] == Level.Status.AVAILABLE:
+			playfield.level = load(Level.DIR_PATH.path_join(file_name))
+			break
+
 	get_tree().root.add_child(playfield)
 	get_tree().current_scene = playfield
 	queue_free()

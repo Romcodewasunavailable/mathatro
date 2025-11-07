@@ -12,6 +12,7 @@ func save_data() -> void:
 
 func load_data() -> void:
 	data = ResourceLoader.load(FILE_PATH) if ResourceLoader.exists(FILE_PATH) else SaveData.new()
+	data.update_level_statuses()
 
 
 func _ready() -> void:

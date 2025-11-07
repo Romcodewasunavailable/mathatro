@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://ksr61t6b6e1k"]
+[gd_scene load_steps=8 format=3 uid="uid://ksr61t6b6e1k"]
 
 [ext_resource type="Script" uid="uid://biwfsskm4h42l" path="res://scripts/playfield.gd" id="1_i5fcf"]
 [ext_resource type="Resource" uid="uid://pru8l3u4r7d7" path="res://levels/test_level.tres" id="2_g3xb0"]
 [ext_resource type="PackedScene" uid="uid://c35tktyy00ora" path="res://scenes/hand.tscn" id="3_xs6qu"]
 [ext_resource type="PackedScene" uid="uid://ctcvyfbittufg" path="res://scenes/stack.tscn" id="4_2johs"]
 [ext_resource type="PackedScene" uid="uid://na4emwrurpym" path="res://scenes/slot_container.tscn" id="5_k06pt"]
+[ext_resource type="Material" uid="uid://dcy61siwc6cf1" path="res://visuals/playfield_background.tres" id="6_g3xb0"]
+[ext_resource type="Script" uid="uid://bui5ab6tmkmwn" path="res://scripts/background_shader_rect.gd" id="7_xs6qu"]
 
 [node name="Playfield" type="Control" node_paths=PackedStringArray("hand", "stack", "slot_container")]
 layout_mode = 3
@@ -45,9 +47,23 @@ layout_mode = 2
 [node name="SlotContainer" parent="HBoxContainer" instance=ExtResource("5_k06pt")]
 layout_mode = 2
 
-[connection signal="mouse_entered" from="Hand/@Control@39344" to="Hand/@Control@39344" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="Hand/@Control@39344" to="Hand/@Control@39344" method="_on_mouse_exited"]
-[connection signal="mouse_entered" from="Hand/@Control@39345" to="Hand/@Control@39345" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="Hand/@Control@39345" to="Hand/@Control@39345" method="_on_mouse_exited"]
-[connection signal="mouse_entered" from="HBoxContainer/Stack/@Control@39346" to="HBoxContainer/Stack/@Control@39346" method="_on_mouse_entered"]
-[connection signal="mouse_exited" from="HBoxContainer/Stack/@Control@39346" to="HBoxContainer/Stack/@Control@39346" method="_on_mouse_exited"]
+[node name="BackgroundCanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="BackgroundShaderRect" type="ColorRect" parent="BackgroundCanvasLayer"]
+material = ExtResource("6_g3xb0")
+instance_shader_parameters/size = Vector2(1920, 1080)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("7_xs6qu")
+metadata/_custom_type_script = "uid://cp4nmtcoc54br"
+
+[connection signal="mouse_entered" from="Hand/Card" to="Hand/Card" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Hand/Card" to="Hand/Card" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="Hand/@Control@21098" to="Hand/@Control@21098" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="Hand/@Control@21098" to="Hand/@Control@21098" method="_on_mouse_exited"]
+[connection signal="mouse_entered" from="HBoxContainer/Stack/Card" to="HBoxContainer/Stack/Card" method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="HBoxContainer/Stack/Card" to="HBoxContainer/Stack/Card" method="_on_mouse_exited"]

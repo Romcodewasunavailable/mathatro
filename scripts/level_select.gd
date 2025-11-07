@@ -22,5 +22,6 @@ func update_level_squares() -> void:
 		var new_level_square: LevelSquare = LEVEL_SQUARE_SCENE.instantiate()
 		new_level_square.level_path = level_path
 		new_level_square.number = level_number
+		new_level_square.status = Save.data.level_statuses[level_path]
 		level_square_container.add_child(new_level_square)
 		level_number += 1
