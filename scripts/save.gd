@@ -11,7 +11,7 @@ func _ready() -> void:
 	load_data()
 
 
-func _notification(what):
+func _notification(what) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
 		save_data()
 		get_tree().quit()

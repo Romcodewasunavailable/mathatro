@@ -35,13 +35,13 @@ void fragment() {
 	);
 
 	vec4 noise_color = mix(
-		texture(noise, vec2(0.5) + center_position / size.y / 2.0 + 0.1 * vec2(
-			sin(TIME * 0.25),
-			cos(TIME * 0.25)
+		texture(noise, 0.25 + SCREEN_UV / 2.0 + 0.1 * vec2(
+			sin(TIME * 0.125),
+			cos(TIME * 0.125)
 		)),
-		texture(noise, vec2(0.5) - center_position / size.y / 4.0 + 0.1 * vec2(
-			cos(TIME * 0.25),
-			sin(TIME * 0.25)
+		texture(noise, 0.625 - SCREEN_UV / 4.0 + 0.1 * vec2(
+			cos(TIME * 0.125),
+			sin(TIME * 0.125)
 		)),
 		0.5
 	);

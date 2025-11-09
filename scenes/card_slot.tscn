@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://cwh4pjt2xmfxw"]
 
 [ext_resource type="Material" uid="uid://hl1vsdpsapra" path="res://visuals/card_slot_material.tres" id="1_cypty"]
+[ext_resource type="Script" uid="uid://cp08pv6vok0n7" path="res://scripts/card_slot.gd" id="1_dwl65"]
 [ext_resource type="Script" uid="uid://cp4nmtcoc54br" path="res://scripts/shader_rect.gd" id="1_mxh2e"]
 [ext_resource type="Texture2D" uid="uid://kdvbednvp5w6" path="res://visuals/lock.png" id="3_hrxt0"]
-[ext_resource type="PackedScene" uid="uid://c17rca2e0emfn" path="res://scenes/card.tscn" id="4_dwl65"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dwl65"]
 bg_color = Color(0.1, 0.1, 0.1, 0.6)
@@ -12,10 +12,12 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[node name="CardSlot" type="Control"]
+[node name="CardSlot" type="Control" node_paths=PackedStringArray("lock_icon")]
 custom_minimum_size = Vector2(200, 280)
 layout_mode = 3
 anchors_preset = 0
+script = ExtResource("1_dwl65")
+lock_icon = NodePath("PanelContainer")
 
 [node name="ShaderRect" type="ColorRect" parent="."]
 material = ExtResource("1_cypty")
@@ -30,6 +32,7 @@ script = ExtResource("1_mxh2e")
 metadata/_custom_type_script = "uid://cp4nmtcoc54br"
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
+visible = false
 z_index = 1
 layout_mode = 1
 anchors_preset = 5
@@ -49,12 +52,9 @@ theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 12
 
-[node name="LockTextureRect" type="TextureRect" parent="PanelContainer/MarginContainer"]
+[node name="TextureRect" type="TextureRect" parent="PanelContainer/MarginContainer"]
 custom_minimum_size = Vector2(48, 48)
 layout_mode = 2
 texture = ExtResource("3_hrxt0")
 expand_mode = 1
 stretch_mode = 5
-
-[node name="Card" parent="." instance=ExtResource("4_dwl65")]
-layout_mode = 0

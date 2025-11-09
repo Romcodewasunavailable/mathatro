@@ -97,13 +97,13 @@ func evaluate(x: Variant = 0.0) -> Variant:
 	return expression.evaluate(x) if expression != null else 0.0
 
 
-func _on_mouse_entered():
+func _on_mouse_entered() -> void:
 	if dragging == null or get_parent() is not Hand:
 		hovering = self
 		hovering_changed.emit()
 
 
-func _on_mouse_exited():
+func _on_mouse_exited() -> void:
 	if hovering == self:
 		hovering = null
 		hovering_changed.emit()
