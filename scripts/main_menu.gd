@@ -18,7 +18,7 @@ func _on_play_button_pressed() -> void:
 	for i in range(Level.file_names.size() - 1, -1, -1):
 		var file_name = Level.file_names[i]
 		if Save.data.level_statuses[file_name] == Level.Status.AVAILABLE:
-			playfield.level = load(Level.DIR_PATH.path_join(file_name))
+			playfield.level_file_name = file_name
 			break
 
 	get_tree().root.add_child(playfield)
@@ -31,4 +31,4 @@ func _on_level_select_button_pressed() -> void:
 
 
 func _on_quit_button_pressed() -> void:
-	get_tree().quit()
+	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)

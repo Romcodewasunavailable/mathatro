@@ -3,8 +3,11 @@
 [ext_resource type="Shader" uid="uid://cbuwmax560vi1" path="res://visuals/playfield_background.gdshader" id="1_j2glw"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_j2glw"]
+frequency = 0.05
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_igjlh"]
+width = 1024
+height = 1024
 noise = SubResource("FastNoiseLite_j2glw")
 
 [resource]
@@ -13,6 +16,9 @@ shader_parameter/accent_color = Color(0.25, 0.25, 0.25, 1)
 shader_parameter/background_color = Color(0, 0, 0, 1)
 shader_parameter/noise = SubResource("NoiseTexture2D_igjlh")
 shader_parameter/time_scale = 0.5
+shader_parameter/mouse_warp_strength = -0.25
+shader_parameter/mouse_warp_start = 64.0
+shader_parameter/mouse_warp_end = 512.0
 shader_parameter/tile_size = 156.0
 shader_parameter/grid_thickness = 16.0
 shader_parameter/edge_blur = 4.0

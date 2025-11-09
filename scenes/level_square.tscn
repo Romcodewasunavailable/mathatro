@@ -68,3 +68,5 @@ mouse_filter = 2
 texture = ExtResource("2_m25mo")
 expand_mode = 1
 stretch_mode = 5
+
+[connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]

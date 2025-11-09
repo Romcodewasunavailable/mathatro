@@ -18,8 +18,8 @@ var expression := Expression.new()
 
 
 func compose(other: LatexExpression) -> void:
-	raw = raw.replace("x", "(%s)" % other.raw)
-	latex = latex.replace("x", "(%s)" % other.latex)
+	raw = raw.replace("x", other.raw)
+	latex = latex.replace("x", other.latex)
 
 
 func evaluate(x: Variant = 0.0) -> Variant:

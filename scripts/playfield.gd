@@ -2,17 +2,22 @@
 class_name Playfield
 extends Control
 
-@export var level: Level
+@export var level_file_name: String:
+	set(value):
+		level_file_name = value
+		level = load(Level.DIR_PATH.path_join(level_file_name))
 @export_tool_button("Start Level") var start_level_action = start_level
 
 @export var hand: Hand
 @export var stack: Stack
 @export var slot_container: SlotContainer
+@export var goal_latexture_rect: TextureRect
+
+var level: Level
 
 
 func _ready() -> void:
-	if level != null:
-		start_level()
+	start_level()
 
 
 func clear() -> void:
@@ -24,11 +29,14 @@ func clear() -> void:
 		slot.queue_free()
 
 
-func start_level(level_path := "") -> void:
-	if not level_path.is_empty():
-		level = load(level_path)
+func start_level() -> void:
+	if level == null:
+		return
 
 	clear()
+
+	goal_latexture_rect.LatexExpression = level.win_condition.latex
+	goal_latexture_rect.Render()
 
 	for expression in level.hand_expressions:
 		hand.add_child(Card.from_expression(expression))

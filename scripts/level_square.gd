@@ -2,7 +2,7 @@
 class_name LevelSquare
 extends Control
 
-@export var level_path := ""
+@export var level_file_name := ""
 @export var number := 1:
 	set(value):
 		number = value
@@ -28,3 +28,7 @@ func update_visuals() -> void:
 	play_button.text = "" if status == Level.Status.LOCKED else str(number)
 	lock_texture_rect.visible = status == Level.Status.LOCKED
 	check_texture_rect.visible  = status == Level.Status.COMPLETED
+
+
+func _on_play_button_pressed() -> void:
+	Playfield
