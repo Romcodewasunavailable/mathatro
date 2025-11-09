@@ -2,6 +2,8 @@
 class_name Playfield
 extends Control
 
+const SCENE = preload("res://scenes/playfield.tscn")
+
 @export var level_file_name: String:
 	set(value):
 		level_file_name = value
@@ -14,6 +16,12 @@ extends Control
 @export var goal_latexture_rect: TextureRect
 
 var level: Level
+
+
+static func from_level_file_name(level_file_name: String) -> Playfield:
+	var new_playfield: Playfield = SCENE.instantiate()
+	new_playfield.level_file_name = level_file_name
+	return new_playfield
 
 
 func _ready() -> void:
@@ -29,7 +37,10 @@ func clear() -> void:
 		slot.queue_free()
 
 
-func start_level() -> void:
+func start_level(file_name := "") -> void:
+	if not file_name.is_empty():
+		level_file_name = file_name
+
 	if level == null:
 		return
 

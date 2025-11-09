@@ -1,6 +1,6 @@
 @tool
 class_name Hand
-extends CardControl
+extends MultiCardControl
 
 @export_range(0.0, 100.0) var selection_offset := 50.0:
 	set(value):
@@ -33,10 +33,10 @@ func _process(delta: float) -> void:
 	for card in cards:
 		if Card.dragging == card:
 			continue
-		card.position = card.position.lerp(anchor_positions[i] - Card.CARD_SIZE / 2.0, lerp_speed * delta)
+		card.position = card.position.lerp(anchor_positions[i] - Card.SIZE / 2.0, lerp_speed * delta)
 		card.rotation = lerp_angle(
 			card.rotation,
-			(card.position + Card.CARD_SIZE / 2.0 - arc_center).angle() + PI / 2.0 + rotation_offset,
+			(card.position + Card.SIZE / 2.0 - arc_center).angle() + PI / 2.0 + rotation_offset,
 			rotation_lerp_speed * delta
 		)
 		i += 1

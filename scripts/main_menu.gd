@@ -2,8 +2,6 @@
 class_name MainMenu
 extends Control
 
-const PLAYFIELD_SCENE = preload("res://scenes/playfield.tscn")
-
 @export var play_button: Button
 
 
@@ -13,17 +11,21 @@ func _ready() -> void:
 
 
 func _on_play_button_pressed() -> void:
-	var playfield: Playfield = PLAYFIELD_SCENE.instantiate()
+	var playfield: Playfield
 
 	for i in range(Level.file_names.size() - 1, -1, -1):
 		var file_name = Level.file_names[i]
 		if Save.data.level_statuses[file_name] == Level.Status.AVAILABLE:
-			playfield.level_file_name = file_name
+			playfield = Playfield.from_level_file_name(file_name)
 			break
 
-	get_tree().root.add_child(playfield)
-	get_tree().current_scene = playfield
-	queue_free()
+	if playfield == null:
+		playfield = Playfield.from_level_file_name(Level.file_names[0])
+
+	if playfield != null:
+		get_tree().root.add_child(playfield)
+		get_tree().current_scene = playfield
+		queue_free()
 
 
 func _on_level_select_button_pressed() -> void:

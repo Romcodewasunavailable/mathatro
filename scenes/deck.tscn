@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dfx4p28xw6a8g"]
-
-[ext_resource type="Script" uid="uid://ctowocl8pk352" path="res://scripts/deck.gd" id="1_6rnap"]
-
-[node name="Deck" type="Control"]
-custom_minimum_size = Vector2(200, 280)
-layout_mode = 3
-anchors_preset = 0
-script = ExtResource("1_6rnap")

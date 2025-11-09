@@ -2,7 +2,9 @@
 class_name LevelSquare
 extends Control
 
-@export var level_file_name := ""
+const SCENE = preload("res://scenes/level_square.tscn")
+
+@export var file_name := ""
 @export var number := 1:
 	set(value):
 		number = value
@@ -19,6 +21,14 @@ extends Control
 @export var check_texture_rect: TextureRect
 
 
+static func from_level_data(file_name: String, number: int, status: Level.Status) -> LevelSquare:
+	var new_level_square: LevelSquare = SCENE.instantiate()
+	new_level_square.file_name = file_name
+	new_level_square.number = number
+	new_level_square.status = status
+	return new_level_square
+
+
 func _ready() -> void:
 	update_visuals()
 
@@ -31,4 +41,10 @@ func update_visuals() -> void:
 
 
 func _on_play_button_pressed() -> void:
-	Playfield
+	var playfield = Playfield.from_level_file_name(file_name)
+
+	if playfield != null:
+		var previous_scene = get_tree().current_scene
+		get_tree().root.add_child(playfield)
+		get_tree().current_scene = playfield
+		previous_scene.queue_free()

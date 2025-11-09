@@ -5,8 +5,8 @@ extends Control
 signal hovering_changed()
 signal dragging_changed()
 
-const CARD_SIZE = Vector2(200.0, 280.0)
-const CARD_SCENE = preload("res://scenes/card.tscn")
+const SIZE = Vector2(200.0, 280.0)
+const SCENE = preload("res://scenes/card.tscn")
 
 static var hovering: Card
 static var dragging: Card
@@ -41,7 +41,7 @@ var previous_position: Vector2
 
 
 static func from_expression(expression: LatexExpression) -> Card:
-	var new_card: Card = CARD_SCENE.instantiate()
+	var new_card: Card = SCENE.instantiate()
 	new_card.expression = expression
 	return new_card
 

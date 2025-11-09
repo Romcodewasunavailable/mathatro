@@ -1,6 +1,6 @@
 @tool
 class_name Stack
-extends CardControl
+extends MultiCardControl
 
 @export var lerp_speed := 10.0
 @export var rotation_lerp_speed := 10.0
