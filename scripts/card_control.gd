@@ -2,23 +2,20 @@
 class_name CardControl
 extends Control
 
-signal cards_changed()
+signal card_changed()
 
-var cards: Array[Card] = []
+var card: Card
 
 
 func _ready() -> void:
-	child_order_changed.connect(_on_child_order_changed)
-	update_cards()
+	child_order_changed.connect(update_card)
+	update_card()
 
 
-func update_cards() -> void:
-	cards.clear()
+func update_card() -> void:
+	card = null
 	for child in get_children():
 		if child is Card:
-			cards.append(child)
-	cards_changed.emit()
-
-
-func _on_child_order_changed() -> void:
-	update_cards()
+			card = child
+			break
+	card_changed.emit()

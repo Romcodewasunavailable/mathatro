@@ -12,8 +12,9 @@ const SCENE = preload("res://scenes/playfield.tscn")
 
 @export var hand: Hand
 @export var stack: Stack
-@export var card_slot_container: Container
+@export var slot_container: Container
 @export var goal_latexture_rect: TextureRect
+@export var background: Background
 
 var level: Level
 
@@ -33,8 +34,8 @@ func clear() -> void:
 		card.queue_free()
 	for card in stack.get_children():
 		card.queue_free()
-	for card_slot in card_slot_container.get_children():
-		card_slot.queue_free()
+	for slot in slot_container.get_children():
+		slot.queue_free()
 
 
 func start_level(file_name := "") -> void:
@@ -50,6 +51,6 @@ func start_level(file_name := "") -> void:
 	goal_latexture_rect.Render()
 	stack.add_child(Card.from_expression(level.start_value))
 	for expression in level.slot_expressions:
-		card_slot_container.add_child(CardSlot.from_expression(expression))
+		slot_container.add_child(Slot.from_expression(expression))
 	for expression in level.hand_expressions:
 		hand.add_child(Card.from_expression(expression))

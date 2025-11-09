@@ -19,8 +19,6 @@ extends MultiCardControl
 		max_angle = value
 		update_anchor_positions()
 @export var rotation_offset := 0.0
-@export var lerp_speed := 10.0
-@export var rotation_lerp_speed := 10.0
 
 var anchor_positions := PackedVector2Array()
 var arc_center: Vector2:
@@ -33,11 +31,15 @@ func _process(delta: float) -> void:
 	for card in cards:
 		if Card.dragging == card:
 			continue
-		card.position = card.position.lerp(anchor_positions[i] - Card.SIZE / 2.0, lerp_speed * delta)
+
+		card.position = card.position.lerp(
+			anchor_positions[i] - Card.SIZE / 2.0,
+			Card.POSITION_LERP_SPEED * delta,
+		)
 		card.rotation = lerp_angle(
 			card.rotation,
 			(card.position + Card.SIZE / 2.0 - arc_center).angle() + PI / 2.0 + rotation_offset,
-			rotation_lerp_speed * delta
+			Card.ROTATION_LERP_SPEED * delta,
 		)
 		i += 1
 
@@ -46,12 +48,15 @@ func update_anchor_positions() -> void:
 	var num_cards = cards.size()
 	var hand_size = num_cards - 1 if Card.dragging in cards else cards.size()
 	var arc_angle = min(card_angle * hand_size, max_angle)
+
 	anchor_positions.clear()
 	anchor_positions.resize(hand_size)
+
 	var j = 0
 	for i in range(num_cards):
 		if Card.dragging == cards[i]:
 			continue
+
 		var radius = arc_radius
 		if Card.hovering == cards[i]:
 			radius += selection_offset

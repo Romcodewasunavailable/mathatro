@@ -7,7 +7,7 @@ uniform sampler2D noise;
 
 uniform float time_scale = 1.0;
 
-uniform float mouse_warp_strength = 1.0;
+uniform float mouse_warp_strength = 0.0;
 uniform float mouse_warp_start = 0.0;
 uniform float mouse_warp_end = 1024.0;
 
