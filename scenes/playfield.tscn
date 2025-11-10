@@ -1,11 +1,10 @@
-[gd_scene load_steps=19 format=3 uid="uid://cxjfak4omvqom"]
+[gd_scene load_steps=18 format=3 uid="uid://cxjfak4omvqom"]
 
 [ext_resource type="Script" uid="uid://biwfsskm4h42l" path="res://scripts/playfield.gd" id="1_f0mr3"]
 [ext_resource type="PackedScene" uid="uid://c35tktyy00ora" path="res://scenes/hand.tscn" id="2_uffj3"]
 [ext_resource type="Script" uid="uid://b607e4166x31h" path="res://addons/GodoTeX/LaTeXtureRect.cs" id="3_s687f"]
 [ext_resource type="PackedScene" uid="uid://ctcvyfbittufg" path="res://scenes/stack.tscn" id="4_p4lw8"]
-[ext_resource type="Material" uid="uid://dcy61siwc6cf1" path="res://visuals/playfield_background_material.tres" id="5_3yvxn"]
-[ext_resource type="Script" uid="uid://bui5ab6tmkmwn" path="res://scripts/background.gd" id="6_2nvtg"]
+[ext_resource type="PackedScene" uid="uid://bk24c1i6c5fpy" path="res://scenes/background.tscn" id="5_i5fcf"]
 
 [sub_resource type="Image" id="Image_g3xb0"]
 data = {
@@ -98,7 +97,7 @@ hand = NodePath("Hand")
 stack = NodePath("HBoxContainer/Stack")
 slot_container = NodePath("HBoxContainer/SlotContainer")
 goal_latexture_rect = NodePath("UICanvasLayer/HBoxContainer/MarginContainer/LaTeXtureRect")
-background = NodePath("BackgroundCanvasLayer/Background")
+background = NodePath("")
 
 [node name="Hand" parent="." instance=ExtResource("2_uffj3")]
 layout_mode = 1
@@ -148,20 +147,7 @@ theme_override_constants/separation = 24
 [node name="BackgroundCanvasLayer" type="CanvasLayer" parent="."]
 layer = -1
 
-[node name="Background" type="ColorRect" parent="BackgroundCanvasLayer"]
-material = ExtResource("5_3yvxn")
-instance_shader_parameters/size = Vector2(1920, 1080)
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-script = ExtResource("6_2nvtg")
-base_color = Color(0.25, 0.25, 0.25, 1)
-pulse_color = Color(0.5, 0.5, 0.5, 1)
-good_pulse_color = Color(0, 1, 0, 1)
-bad_pulse_color = Color(1, 0, 0, 1)
-metadata/_custom_type_script = "uid://cp4nmtcoc54br"
+[node name="Background" parent="BackgroundCanvasLayer" instance=ExtResource("5_i5fcf")]
 
 [node name="UICanvasLayer" type="CanvasLayer" parent="."]
 
@@ -242,3 +228,5 @@ script = ExtResource("3_s687f")
 _latexExpression = "\\Rightarrow"
 _fontSize = 64.0
 metadata/_custom_type_script = "uid://b607e4166x31h"
+
+[connection signal="pressed" from="UICanvasLayer/MarginContainer/StartButton" to="." method="_on_start_button_pressed"]

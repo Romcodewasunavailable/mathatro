@@ -2,12 +2,11 @@
 class_name Background
 extends ShaderRect
 
-@export_color_no_alpha var base_color: Color
-@export_color_no_alpha var pulse_color: Color
-@export_color_no_alpha var good_pulse_color: Color
-@export_color_no_alpha var bad_pulse_color: Color
+@export_color_no_alpha var base_color := Color.WHITE
+@export_color_no_alpha var pulse_color := Color.WHITE
+@export_color_no_alpha var good_pulse_color := Color.WHITE
+@export_color_no_alpha var bad_pulse_color := Color.WHITE
 @export var pulse_duration := 1.0
-@export_tool_button("Pulse") var pulse_action = pulse
 
 @export var click_warp_strength := -0.25
 @export var click_warp_duration := 1.0

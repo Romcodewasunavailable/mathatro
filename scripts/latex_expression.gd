@@ -17,6 +17,13 @@ extends Resource
 var expression := Expression.new()
 
 
+func _init(raw := "", latex := "") -> void:
+	if raw != "":
+		self.raw = raw
+	if latex != "":
+		self.latex = latex
+
+
 func compose(other: LatexExpression) -> void:
 	raw = raw.replace("x", other.raw)
 	latex = latex.replace("x", other.latex)

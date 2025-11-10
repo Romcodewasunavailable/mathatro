@@ -16,7 +16,6 @@ color_ramp = SubResource("Gradient_dgdkf")
 
 [resource]
 shader = ExtResource("1_dgdkf")
-shader_parameter/border_color = Color(1, 1, 1, 1)
 shader_parameter/noise = SubResource("NoiseTexture2D_n6h1o")
 shader_parameter/border_thickness = 4.0
 shader_parameter/num_stripes = 2.0

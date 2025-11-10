@@ -54,3 +54,14 @@ func start_level(file_name := "") -> void:
 		slot_container.add_child(Slot.from_expression(expression))
 	for expression in level.hand_expressions:
 		hand.add_child(Card.from_expression(expression))
+
+
+func _on_start_button_pressed() -> void:
+	var slots_full = false
+	for slot: Slot in slot_container.get_children():
+		if slot.card == null:
+			slot.pulse_bad()
+			slots_full = true
+
+	if not slots_full:
+		return

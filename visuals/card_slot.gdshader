@@ -1,12 +1,11 @@
 shader_type canvas_item;
 
-uniform vec4 border_color : source_color = vec4(1.0);
-
 uniform sampler2D noise;
 
 uniform float border_thickness = 4.0;
 uniform float num_stripes = 2.0;
 
+instance uniform vec4 fill_color : source_color = vec4(1.0);
 instance uniform vec2 size = vec2(40.0);
 
 float sd_rounded_box(in vec2 p, in vec2 b, in vec4 r) {
@@ -34,18 +33,21 @@ void fragment() {
 		abs(stripe_fade - 0.5) * 2.0
 	);
 
-	vec4 noise_color = mix(
+	float noise_fade = mix(
 		texture(noise, 0.25 + SCREEN_UV / 2.0 + 0.1 * vec2(
 			sin(TIME * 0.05),
 			cos(TIME * 0.05)
-		)),
+		)).a,
 		texture(noise, 0.625 - SCREEN_UV / 4.0 + 0.1 * vec2(
 			cos(TIME * 0.05),
 			sin(TIME * 0.05)
-		)),
+		)).a,
 		0.5
 	);
-	vec4 color = mix(noise_color, border_color, border_fade);
+
+	vec4 color = fill_color;
+	color.a *= noise_fade;
+	color = mix(color, fill_color, border_fade);
 	color.a *= fill_fade;
 
 	COLOR = color;

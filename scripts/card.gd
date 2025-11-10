@@ -6,8 +6,9 @@ signal hovering_changed()
 signal dragging_changed()
 
 const POSITION_LERP_SPEED = 10.0
+const ROTATION_LERP_SPEED = 20.0
 const DRAG_POSITION_LERP_SPEED = 30.0
-const ROTATION_LERP_SPEED = 10.0
+const DRAG_ROTATION_LERP_SPEED = 10.0
 const DRAG_ROTATION_STRENGTH = 0.0001
 const SIZE = Vector2(200.0, 280.0)
 const SCENE = preload("res://scenes/card.tscn")
@@ -51,7 +52,6 @@ static func from_expression(expression: LatexExpression) -> Card:
 func _ready() -> void:
 	update_latex()
 	back_face.visible = not face_up
-	print(size)
 
 
 func _process(delta: float) -> void:
@@ -70,11 +70,11 @@ func _process(delta: float) -> void:
 		velocity = Vector2.ZERO
 	previous_position = position
 
-	if dragging == self or get_parent() is not Hand:
+	if dragging == self:
 		rotation = lerp_angle(
 			rotation,
 			DRAG_ROTATION_STRENGTH * velocity.x,
-			ROTATION_LERP_SPEED * delta,
+			DRAG_ROTATION_LERP_SPEED * delta,
 		)
 
 

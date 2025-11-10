@@ -8,12 +8,17 @@ const SCENE = preload("res://scenes/slot.tscn")
 
 static var hovering: Slot
 
+@export var base_color := Color.WHITE
+@export var bad_pulse_color := Color.WHITE
+@export var pulse_duration := 1.0
+
 @export var locked := false:
 	set(value):
 		locked = value
 		if is_node_ready():
 			update_lock_icon()
 
+@export var shader_rect: ShaderRect
 @export var lock_icon: Control
 
 
@@ -39,6 +44,16 @@ func _process(delta: float) -> void:
 
 func update_lock_icon() -> void:
 	lock_icon.visible = locked
+
+
+func pulse_bad() -> void:
+	shader_rect.set_instance_shader_parameter(&"fill_color", bad_pulse_color)
+	create_tween().tween_method(
+		func(value): shader_rect.set_instance_shader_parameter(&"fill_color", value),
+		shader_rect.get_instance_shader_parameter(&"fill_color"),
+		base_color,
+		pulse_duration
+	).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
 
 
 func _on_mouse_entered() -> void:

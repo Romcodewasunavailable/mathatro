@@ -12,18 +12,23 @@ corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[node name="Slot" type="Control" node_paths=PackedStringArray("lock_icon")]
+[node name="Slot" type="Control" node_paths=PackedStringArray("shader_rect", "lock_icon")]
 custom_minimum_size = Vector2(200, 280)
 layout_mode = 3
 anchors_preset = 0
 offset_right = 200.0
 offset_bottom = 280.0
+size_flags_horizontal = 0
+size_flags_vertical = 0
 mouse_filter = 1
 script = ExtResource("1_5f2j7")
+bad_pulse_color = Color(1, 0, 0, 1)
+shader_rect = NodePath("ShaderRect")
 lock_icon = NodePath("PanelContainer")
 
 [node name="ShaderRect" type="ColorRect" parent="."]
 material = ExtResource("2_sjnr7")
+instance_shader_parameters/fill_color = Color(1, 1, 1, 1)
 instance_shader_parameters/size = Vector2(200, 280)
 layout_mode = 1
 anchors_preset = 15
@@ -36,7 +41,6 @@ script = ExtResource("3_n3jes")
 metadata/_custom_type_script = "uid://cp4nmtcoc54br"
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
-visible = false
 z_index = 1
 layout_mode = 1
 anchors_preset = 5
