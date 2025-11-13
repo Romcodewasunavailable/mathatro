@@ -81,7 +81,7 @@ func _process(delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if (hovering == self
 	and event.is_action_pressed(&"click")
-	and get_parent() is not Stack
+	and get_parent().get_script() not in [Stack, Spiral]
 	and (get_parent() is not Slot or not get_parent().locked)):
 		if get_parent() is Slot:
 			reparent(get_node(^"/root/Playfield").hand)

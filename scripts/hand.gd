@@ -2,19 +2,19 @@
 class_name Hand
 extends MultiCardControl
 
-@export_range(0.0, 100.0) var selection_offset := 50.0:
+@export var selection_offset := 50.0:
 	set(value):
 		selection_offset = value
 		update_anchor_positions()
-@export_range(500.0, 10000.0) var arc_radius := 1500.0:
+@export var arc_radius := 1500.0:
 	set(value):
 		arc_radius = value
 		update_anchor_positions()
-@export_range(0.0, 1000.0) var card_angle := 100.0:
+@export var card_angle := 100.0:
 	set(value):
 		card_angle = value
 		update_anchor_positions()
-@export_range(0.0, 1000.0) var max_angle := 600.0:
+@export var max_angle := 600.0:
 	set(value):
 		max_angle = value
 		update_anchor_positions()

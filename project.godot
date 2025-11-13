@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Mathatro"
-run/main_scene="uid://c4whrh7kep8br"
+run/main_scene="uid://bx8ase57cw2c4"
 config/features=PackedStringArray("4.5", "C#", "Forward Plus")
 config/icon="res://visuals/icon.svg"
 
