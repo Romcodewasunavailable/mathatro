@@ -28,7 +28,7 @@ lock_icon = NodePath("PanelContainer")
 
 [node name="ShaderRect" type="ColorRect" parent="."]
 material = ExtResource("2_sjnr7")
-instance_shader_parameters/fill_color = Color(1, 1, 1, 1)
+instance_shader_parameters/fill_color = Color(1, 0.99148893, 0.99148893, 1)
 instance_shader_parameters/size = Vector2(200, 280)
 layout_mode = 1
 anchors_preset = 15
@@ -41,6 +41,7 @@ script = ExtResource("3_n3jes")
 metadata/_custom_type_script = "uid://cp4nmtcoc54br"
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
+visible = false
 z_index = 1
 layout_mode = 1
 anchors_preset = 5

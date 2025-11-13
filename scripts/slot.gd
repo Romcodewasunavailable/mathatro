@@ -11,6 +11,7 @@ static var hovering: Slot
 @export var base_color := Color.WHITE
 @export var bad_pulse_color := Color.WHITE
 @export var pulse_duration := 1.0
+@export_tool_button("Pulse Bad") var pulse_bad_action = pulse_bad
 
 @export var locked := false:
 	set(value):

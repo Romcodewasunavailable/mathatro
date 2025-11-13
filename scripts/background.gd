@@ -7,6 +7,9 @@ extends ShaderRect
 @export_color_no_alpha var good_pulse_color := Color.WHITE
 @export_color_no_alpha var bad_pulse_color := Color.WHITE
 @export var pulse_duration := 1.0
+@export_tool_button("Pulse") var pulse_action = pulse
+@export_tool_button("Pulse Good") var pulse_good_action = pulse_good
+@export_tool_button("Pulse Bad") var pulse_bad_action = pulse_bad
 
 @export var click_warp_strength := -0.25
 @export var click_warp_duration := 1.0

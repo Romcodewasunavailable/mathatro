@@ -2,6 +2,8 @@
 class_name LevelSquare
 extends Control
 
+signal play_button_pressed(file_name: String)
+
 const SCENE = preload("res://scenes/level_square.tscn")
 
 @export var file_name := ""
@@ -41,10 +43,4 @@ func update_visuals() -> void:
 
 
 func _on_play_button_pressed() -> void:
-	var playfield = Playfield.from_level_file_name(file_name)
-
-	if playfield != null:
-		var previous_scene = get_tree().current_scene
-		get_tree().root.add_child(playfield)
-		get_tree().current_scene = playfield
-		previous_scene.queue_free()
+	play_button_pressed.emit(file_name)

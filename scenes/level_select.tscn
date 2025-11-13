@@ -1,8 +1,62 @@
-[gd_scene load_steps=2 format=3 uid="uid://wocmyj3b1w00"]
+[gd_scene load_steps=6 format=3 uid="uid://wocmyj3b1w00"]
 
 [ext_resource type="Script" uid="uid://clrw00gs4187u" path="res://scripts/level_select.gd" id="1_3shnc"]
 
-[node name="LevelSelect" type="Control" node_paths=PackedStringArray("level_square_container")]
+[sub_resource type="Animation" id="Animation_l6cm7"]
+resource_name = "fade_in"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(-2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_ekxnf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_bqqt6"]
+resource_name = "fade_out"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(-2, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bqqt6"]
+_data = {
+&"RESET": SubResource("Animation_ekxnf"),
+&"fade_in": SubResource("Animation_l6cm7"),
+&"fade_out": SubResource("Animation_bqqt6")
+}
+
+[node name="LevelSelect" type="Control" node_paths=PackedStringArray("level_square_container", "animation_player")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,6 +65,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_3shnc")
 level_square_container = NodePath("GridContainer")
+animation_player = NodePath("AnimationPlayer")
 
 [node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 1
@@ -28,3 +83,12 @@ grow_vertical = 2
 theme_override_constants/h_separation = 32
 theme_override_constants/v_separation = 64
 columns = 5
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_bqqt6")
+}
+autoplay = "fade_in"
+
+[connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

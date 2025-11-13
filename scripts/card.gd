@@ -4,6 +4,7 @@ extends Control
 
 signal hovering_changed()
 signal dragging_changed()
+signal removed_from_slot(card: Card)
 
 const POSITION_LERP_SPEED = 10.0
 const ROTATION_LERP_SPEED = 20.0
@@ -84,7 +85,7 @@ func _input(event: InputEvent) -> void:
 	and get_parent().get_script() not in [Stack, Spiral]
 	and (get_parent() is not Slot or not get_parent().locked)):
 		if get_parent() is Slot:
-			reparent(get_node(^"/root/Playfield").hand)
+			removed_from_slot.emit(self)
 		z_index = 2
 		drag_position = position
 		dragging = self
@@ -99,7 +100,7 @@ func _input(event: InputEvent) -> void:
 	elif dragging == self and event is InputEventMouseMotion:
 		drag_position += event.relative
 		if get_parent() is Slot and Slot.hovering == null:
-			reparent(get_node(^"/root/Playfield").hand)
+			removed_from_slot.emit(self)
 		elif get_parent() is not Slot and Slot.hovering != null:
 			reparent(Slot.hovering)
 

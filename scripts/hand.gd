@@ -72,6 +72,8 @@ func _on_child_entered_tree(node: Node) -> void:
 	if node is Card:
 		node.hovering_changed.connect(_on_card_hovering_changed)
 		node.dragging_changed.connect(_on_card_dragging_changed)
+		if not node.removed_from_slot.is_connected(_on_card_removed_from_slot):
+			node.removed_from_slot.connect(_on_card_removed_from_slot)
 
 
 func _on_child_exiting_tree(node: Node) -> void:
@@ -94,3 +96,7 @@ func _on_card_hovering_changed() -> void:
 
 func _on_card_dragging_changed() -> void:
 	update_anchor_positions()
+
+
+func _on_card_removed_from_slot(card: Card) -> void:
+	card.reparent(self)
