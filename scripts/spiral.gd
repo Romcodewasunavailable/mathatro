@@ -2,6 +2,23 @@
 class_name Spiral
 extends MultiCardControl
 
+signal state_change_finished()
+
+enum State {
+	CLOSED,
+	HALF_OPEN,
+	OPEN,
+}
+
+@export var state := State.OPEN:
+	set(value):
+		var previous_state = state
+		state = value
+		if state != previous_state:
+			tween_radius_offset(int(state) * 8.0)
+			tween_opacity(1.0 - int(state) * 0.5)
+			create_tween().tween_callback(state_change_finished.emit).set_delay(tween_duration)
+
 @export var num_cards := 160:
 	set(value):
 		num_cards = value
@@ -12,11 +29,7 @@ extends MultiCardControl
 @export_exp_easing("attenuation") var radius_exp := 0.5
 @export_exp_easing("attenuation") var angle_exp := 1.0
 @export_exp_easing() var brightness_exp := 0.75
-
 @export var tween_duration := 2.0
-@export_tool_button("Open") var open_action = open
-@export_tool_button("Half Open") var half_open_action = half_open
-@export_tool_button("Close") var close_action = close
 
 
 func _ready() -> void:
@@ -24,7 +37,6 @@ func _ready() -> void:
 	radius_offset = 16.0
 	modulate.a = 0.0
 	generate_cards()
-	close()
 
 
 func _process(_delta: float) -> void:
@@ -69,18 +81,3 @@ func tween_opacity(to: float):
 		to_color,
 		tween_duration,
 	).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
-
-
-func open() -> void:
-	tween_radius_offset(16.0)
-	tween_opacity(0.0)
-
-
-func half_open() -> void:
-	tween_radius_offset(8.0)
-	tween_opacity(0.5)
-
-
-func close() -> void:
-	tween_radius_offset(0.0)
-	tween_opacity(1.0)

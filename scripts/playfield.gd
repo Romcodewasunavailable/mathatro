@@ -2,6 +2,8 @@
 class_name Playfield
 extends Control
 
+signal pause_button_pressed()
+
 const SCENE = preload("res://scenes/playfield.tscn")
 
 @export var level_file_name: String:
@@ -14,6 +16,7 @@ const SCENE = preload("res://scenes/playfield.tscn")
 @export var stack: Stack
 @export var slot_container: Container
 @export var goal_latexture_rect: TextureRect
+@export var title_label: Label
 @export var background: Background
 
 var level: Level
@@ -47,6 +50,7 @@ func start_level(file_name := "") -> void:
 
 	clear()
 
+	title_label.text = "Level %d - Goal:" % (Level.file_names.find(file_name) + 1)
 	goal_latexture_rect.LatexExpression = level.win_condition.latex
 	goal_latexture_rect.Render()
 	stack.add_child(Card.from_expression(level.start_value))
@@ -65,3 +69,7 @@ func _on_start_button_pressed() -> void:
 
 	if not slots_full:
 		return
+
+
+func _on_pause_button_pressed():
+	pause_button_pressed.emit()
