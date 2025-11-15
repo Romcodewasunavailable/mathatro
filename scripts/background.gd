@@ -34,7 +34,7 @@ func tween_color(color: Color) -> void:
 		material.get_shader_parameter(&"accent_color"),
 		color,
 		pulse_duration
-	).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
+	).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 
 
 func tween_warp(strength: float) -> void:

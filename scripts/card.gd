@@ -40,8 +40,9 @@ static var dragging: Card
 @export var back_face: Control
 @export var animation_player: AnimationPlayer
 
-var previous_position: Vector2
 var drag_position: Vector2
+var previous_position: Vector2
+var velocity: Vector2
 
 
 static func from_expression(expression: LatexExpression) -> Card:
@@ -66,7 +67,7 @@ func _process(delta: float) -> void:
 
 	if previous_position == null:
 		previous_position = position
-	var velocity = (position - previous_position) / delta
+	velocity = (position - previous_position) / delta
 	if velocity.length() * delta > 250.0:
 		velocity = Vector2.ZERO
 	previous_position = position
@@ -80,10 +81,12 @@ func _process(delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if (hovering == self
-	and event.is_action_pressed(&"click")
-	and get_parent().get_script() not in [Stack, Spiral]
-	and (get_parent() is not Slot or not get_parent().locked)):
+	if event.is_action_pressed(&"click"):
+		if (hovering != self
+		or (get_parent() is not Hand
+		and (get_parent() is not Slot or get_parent().locked))):
+			return
+
 		if get_parent() is Slot:
 			removed_from_slot.emit(self)
 		z_index = 2

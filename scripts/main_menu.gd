@@ -3,7 +3,7 @@ class_name MainMenu
 extends Control
 
 signal play_button_pressed()
-signal level_select_button_pressed()
+signal disappeared_level_select()
 
 @export var play_button: Button
 @export var animation_player: AnimationPlayer
@@ -20,7 +20,7 @@ func _on_play_button_pressed() -> void:
 
 
 func _on_level_select_button_pressed() -> void:
-	animation_player.animation_finished.connect(func(_anim_name: StringName): level_select_button_pressed.emit())
+	animation_player.animation_finished.connect(func(_anim_name: StringName): disappeared_level_select.emit())
 	animation_player.play(&"fade_out")
 
 

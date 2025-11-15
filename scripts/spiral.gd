@@ -1,6 +1,6 @@
 @tool
 class_name Spiral
-extends MultiCardControl
+extends Control
 
 signal state_change_finished()
 
@@ -31,11 +31,13 @@ enum State {
 @export_exp_easing() var brightness_exp := 0.75
 @export var tween_duration := 2.0
 
+@export var canvas_group: CanvasGroup
+@export var multi_card_control: MultiCardControl
+
 
 func _ready() -> void:
-	super._ready()
 	radius_offset = 16.0
-	modulate.a = 0.0
+	canvas_group.self_modulate.a = 0.0
 	generate_cards()
 
 
@@ -43,10 +45,10 @@ func _process(_delta: float) -> void:
 	var time = Time.get_ticks_msec() / 1000.0
 	var angle = time * 0.05
 	for i in range(num_cards):
-		var card = cards[i]
+		var card = multi_card_control.cards[i]
 		var radius = radius_coef * (i + 1 + radius_offset ** (1.0 / radius_exp)) ** (radius_exp + sin(time * 0.2) * 0.005)
 		angle += angle_coef * radius ** (-angle_exp)
-		card.position = (size - card.size) / 2.0 + (radius) * Vector2(
+		card.position = (multi_card_control.size - card.size) / 2.0 + radius * Vector2(
 			cos(angle),
 			sin(angle),
 		)
@@ -55,12 +57,12 @@ func _process(_delta: float) -> void:
 
 
 func generate_cards() -> void:
-	for child in get_children():
+	for child in multi_card_control.get_children():
 		if child is Card:
 			child.queue_free()
 
 	for i in range(num_cards):
-		add_child(Card.from_expression(LatexExpression.new("", LatexSamples.random())))
+		multi_card_control.add_child(Card.from_expression(LatexExpression.new("", LatexSamples.random())))
 
 
 func tween_radius_offset(to: float):
@@ -73,11 +75,15 @@ func tween_radius_offset(to: float):
 
 
 func tween_opacity(to: float):
-	var to_color = modulate
+	var to_color = canvas_group.self_modulate
 	to_color.a = to
 	create_tween().tween_property(
-		self,
-		^"modulate",
+		canvas_group,
+		^"self_modulate",
 		to_color,
-		tween_duration,
-	).set_trans(Tween.TRANS_EXPO).set_ease(Tween.EASE_OUT)
+		tween_duration / 4.0,
+	).set_trans(Tween.TRANS_SINE)
+
+
+func _on_resized() -> void:
+	multi_card_control.size = size

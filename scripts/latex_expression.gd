@@ -25,8 +25,17 @@ func _init(raw := "", latex := "") -> void:
 
 
 func compose(other: LatexExpression) -> void:
-	raw = raw.replace("x", other.raw)
-	latex = latex.replace("x", other.latex)
+	raw = raw.replace("x", "(%s)" % other.raw)
+	latex = latex.replace("x", "(%s)" % other.latex)
+
+	if not latex.contains("x"):
+		var result = evaluate()
+		if result is float:
+			if is_equal_approx(result, roundi(result)):
+				result = roundi(result)
+			else:
+				result = snappedf(result, 0.00001)
+		latex = str(result)
 
 
 func evaluate(x: Variant = 0.0) -> Variant:
