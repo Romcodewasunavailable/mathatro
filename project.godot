@@ -20,6 +20,7 @@ config/icon="res://visuals/icon.svg"
 
 ExpressionContext="*res://scripts/expression_context.gd"
 Save="*res://scripts/save.gd"
+MatrixLib="*res://addons/matrix_calc/Lib.gd"
 
 [debug]
 
@@ -42,7 +43,7 @@ project/assembly_name="Mathatro"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/GodoTeX/plugin.cfg")
+enabled=PackedStringArray("res://addons/GodoTeX/plugin.cfg", "res://addons/matrix_calc/plugin.cfg")
 
 [input]
 

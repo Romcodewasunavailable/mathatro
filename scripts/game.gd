@@ -29,10 +29,12 @@ func load_main_menu() -> void:
 	)
 	main_menu.disappeared_level_select.connect(load_level_select_menu)
 	main_menu.quit_button_pressed.connect(func():
+		if playfield != null:
+			playfield.queue_free()
+		spiral.state = Spiral.State.OPEN
 		create_tween().tween_callback(
 			get_tree().root.propagate_notification.bind(NOTIFICATION_WM_CLOSE_REQUEST)
 		).set_delay(0.5)
-		spiral.state = Spiral.State.OPEN
 	)
 	menu_canvas_layer.add_child(main_menu)
 

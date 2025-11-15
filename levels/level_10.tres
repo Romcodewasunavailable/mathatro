@@ -1,0 +1,54 @@
+[gd_resource type="Resource" script_class="Level" load_steps=10 format=3 uid="uid://1y4q0ufvedyo"]
+
+[ext_resource type="Script" uid="uid://dkcni75ogr2o4" path="res://scripts/latex_expression.gd" id="1_wk7ud"]
+[ext_resource type="Script" uid="uid://dcky4oisx2cv3" path="res://scripts/level.gd" id="2_w6fxy"]
+
+[sub_resource type="Resource" id="Resource_wk7ud"]
+script = ExtResource("1_wk7ud")
+raw = "(x) - 5.0"
+latex = "{x} - 5"
+metadata/_custom_type_script = "uid://dkcni75ogr2o4"
+
+[sub_resource type="Resource" id="Resource_w6fxy"]
+script = ExtResource("1_wk7ud")
+raw = "(x) - 3.0"
+latex = "{x} - 3"
+metadata/_custom_type_script = "uid://dkcni75ogr2o4"
+
+[sub_resource type="Resource" id="Resource_svb0a"]
+script = ExtResource("1_wk7ud")
+raw = "(x) / 9.0"
+latex = "\\frac{x}{9}"
+metadata/_custom_type_script = "uid://dkcni75ogr2o4"
+
+[sub_resource type="Resource" id="Resource_5btyn"]
+script = ExtResource("1_wk7ud")
+raw = "8.0 * (x)"
+latex = "8{x}"
+metadata/_custom_type_script = "uid://dkcni75ogr2o4"
+
+[sub_resource type="Resource" id="Resource_uh61t"]
+script = ExtResource("1_wk7ud")
+raw = "1.0 / (x)"
+latex = "\\frac{1}{x}"
+metadata/_custom_type_script = "uid://dkcni75ogr2o4"
+
+[sub_resource type="Resource" id="Resource_2ri0w"]
+script = ExtResource("1_wk7ud")
+raw = "48.0"
+latex = "48"
+metadata/_custom_type_script = "uid://dkcni75ogr2o4"
+
+[sub_resource type="Resource" id="Resource_qkdl1"]
+script = ExtResource("1_wk7ud")
+raw = "not is_finite(x)"
+latex = "{x} \\notin \\mathbb{R}"
+metadata/_custom_type_script = "uid://dkcni75ogr2o4"
+
+[resource]
+script = ExtResource("2_w6fxy")
+start_value = SubResource("Resource_2ri0w")
+win_condition = SubResource("Resource_qkdl1")
+slot_expressions = Array[ExtResource("1_wk7ud")]([null, null, null, null, null])
+hand_expressions = Array[ExtResource("1_wk7ud")]([SubResource("Resource_wk7ud"), SubResource("Resource_w6fxy"), SubResource("Resource_svb0a"), SubResource("Resource_5btyn"), SubResource("Resource_uh61t")])
+metadata/_custom_type_script = "uid://dcky4oisx2cv3"

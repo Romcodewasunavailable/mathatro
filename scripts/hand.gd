@@ -47,7 +47,7 @@ func _process(delta: float) -> void:
 func update_anchor_positions() -> void:
 	var num_cards = cards.size()
 	var hand_size = num_cards - 1 if Card.dragging in cards else cards.size()
-	var arc_angle = min(card_angle * hand_size, max_angle)
+	var arc_angle = min(card_angle * (hand_size - 1), max_angle)
 
 	anchor_positions.clear()
 	anchor_positions.resize(hand_size)

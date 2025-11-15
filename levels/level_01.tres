@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="Level" load_steps=6 format=3 uid="uid://pru8l3u4r7d7"]
+
+[ext_resource type="Script" uid="uid://dkcni75ogr2o4" path="res://scripts/latex_expression.gd" id="1_p6a7c"]
+[ext_resource type="Script" uid="uid://dcky4oisx2cv3" path="res://scripts/level.gd" id="2_dpay0"]
+
+[sub_resource type="Resource" id="Resource_y0cn1"]
+script = ExtResource("1_p6a7c")
+raw = "2.0 * (x)"
+latex = "2{x}"
+metadata/_custom_type_script = "uid://dkcni75ogr2o4"
+
+[sub_resource type="Resource" id="Resource_73fod"]
+script = ExtResource("1_p6a7c")
+raw = "5.0"
+latex = "5"
+metadata/_custom_type_script = "uid://dkcni75ogr2o4"
+
+[sub_resource type="Resource" id="Resource_2brtm"]
+script = ExtResource("1_p6a7c")
+raw = "is_equal_approx((x), 10.0)"
+latex = "{x} = 10"
+metadata/_custom_type_script = "uid://dkcni75ogr2o4"
+
+[resource]
+script = ExtResource("2_dpay0")
+start_value = SubResource("Resource_73fod")
+win_condition = SubResource("Resource_2brtm")
+slot_expressions = Array[ExtResource("1_p6a7c")]([null])
+hand_expressions = Array[ExtResource("1_p6a7c")]([SubResource("Resource_y0cn1")])
+metadata/_custom_type_script = "uid://dcky4oisx2cv3"

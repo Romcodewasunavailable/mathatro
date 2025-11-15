@@ -1,0 +1,78 @@
+[gd_resource type="Resource" script_class="Level" load_steps=12 format=3 uid="uid://bm0qfon2p2ja3"]
+
+[ext_resource type="Script" uid="uid://dkcni75ogr2o4" path="res://scripts/latex_expression.gd" id="1_uj2vm"]
+[ext_resource type="Script" uid="uid://dcky4oisx2cv3" path="res://scripts/level.gd" id="2_j1vpg"]
+
+[sub_resource type="Resource" id="Resource_0ktog"]
+script = ExtResource("1_uj2vm")
+raw = "(x)"
+latex = "{x}"
+metadata/_custom_type_script = "uid://dkcni75ogr2o4"
+
+[sub_resource type="Resource" id="Resource_xfjkv"]
+script = ExtResource("1_uj2vm")
+raw = "(x) + 3.0"
+latex = "{x} + 3"
+metadata/_custom_type_script = "uid://dkcni75ogr2o4"
+
+[sub_resource type="Resource" id="Resource_e5vkd"]
+script = ExtResource("1_uj2vm")
+raw = "(x) / 4.0"
+latex = "\\frac{x}{4}"
+metadata/_custom_type_script = "uid://dkcni75ogr2o4"
+
+[sub_resource type="Resource" id="Resource_570x6"]
+script = ExtResource("1_uj2vm")
+raw = "0.0 * (x)"
+latex = "0{x}"
+metadata/_custom_type_script = "uid://dkcni75ogr2o4"
+
+[sub_resource type="Resource" id="Resource_ed2kg"]
+script = ExtResource("1_uj2vm")
+raw = "3.0 * (x)"
+latex = "3{x}"
+metadata/_custom_type_script = "uid://dkcni75ogr2o4"
+
+[sub_resource type="Resource" id="Resource_o501q"]
+script = ExtResource("1_uj2vm")
+raw = "(x).cross(Vector3(2.0, 3.0, 6.0))"
+latex = "{x} \\times \\begin{pmatrix}
+2 \\\\
+3 \\\\
+6
+\\end{pmatrix}"
+metadata/_custom_type_script = "uid://dkcni75ogr2o4"
+
+[sub_resource type="Resource" id="Resource_ugc5f"]
+script = ExtResource("1_uj2vm")
+raw = "(x).dot(Vector3(2.0, 1.0, 2.0))"
+latex = "{x} \\cdot \\begin{pmatrix}
+2 \\\\
+1 \\\\
+2
+\\end{pmatrix}"
+metadata/_custom_type_script = "uid://dkcni75ogr2o4"
+
+[sub_resource type="Resource" id="Resource_uj2vm"]
+script = ExtResource("1_uj2vm")
+raw = "Vector3(6.0, 3.0, 2.0)"
+latex = "\\begin{pmatrix}
+6 \\\\
+3 \\\\
+2
+\\end{pmatrix}"
+metadata/_custom_type_script = "uid://dkcni75ogr2o4"
+
+[sub_resource type="Resource" id="Resource_j1vpg"]
+script = ExtResource("1_uj2vm")
+raw = "is_equal_approx((x), 3.0)"
+latex = "{x} = 3"
+metadata/_custom_type_script = "uid://dkcni75ogr2o4"
+
+[resource]
+script = ExtResource("2_j1vpg")
+start_value = SubResource("Resource_uj2vm")
+win_condition = SubResource("Resource_j1vpg")
+slot_expressions = Array[ExtResource("1_uj2vm")]([null, null, SubResource("Resource_ugc5f"), null])
+hand_expressions = Array[ExtResource("1_uj2vm")]([SubResource("Resource_0ktog"), SubResource("Resource_xfjkv"), SubResource("Resource_e5vkd"), SubResource("Resource_570x6"), SubResource("Resource_ed2kg"), SubResource("Resource_o501q")])
+metadata/_custom_type_script = "uid://dcky4oisx2cv3"

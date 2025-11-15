@@ -1,0 +1,14 @@
+[remap]
+
+importer="glsl"
+type="RDShaderFile"
+uid="uid://bx5cb1f86dk64"
+path="res://.godot/imported/matrix_mul.glsl-b3c0f18504f0fecf03ae64b3cc6d909b.res"
+
+[deps]
+
+source_file="res://addons/matrix_calc/Shader/matrix_mul.glsl"
+dest_files=["res://.godot/imported/matrix_mul.glsl-b3c0f18504f0fecf03ae64b3cc6d909b.res"]
+
+[params]
+

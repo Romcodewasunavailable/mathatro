@@ -83,7 +83,8 @@ func check_slots() -> bool:
 
 
 func check_win_condition() -> void:
-	if level.win_condition.evaluate(stack.cards[-1].evaluate()):
+	var result = level.win_condition.evaluate(stack.cards[-1].evaluate())
+	if result is bool and result:
 		background.pulse_good()
 		Save.data.level_statuses[level_file_name] = Level.Status.COMPLETED
 		Save.data.update_level_statuses()

@@ -18,6 +18,9 @@ grow_vertical = 0
 size_flags_horizontal = 4
 size_flags_vertical = 8
 script = ExtResource("1_eyfoh")
+arc_radius = 2000.0
+card_angle = 175.0
+max_angle = 875.0
 
 [connection signal="cards_changed" from="." to="." method="_on_cards_changed"]
 [connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]
