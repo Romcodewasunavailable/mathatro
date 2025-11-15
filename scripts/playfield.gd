@@ -3,19 +3,18 @@ class_name Playfield
 extends Control
 
 signal pause_button_pressed()
+signal level_completed()
 
-const CARD_APPLY_INTERVAL = 1.0
 const SCENE = preload("res://scenes/playfield.tscn")
 
 @export var level_file_name: String:
 	set(value):
 		level_file_name = value
-		level = ResourceLoader.load(
-			Level.DIR_PATH.path_join(level_file_name),
-			"Level",
-			ResourceLoader.CACHE_MODE_IGNORE,
-		)
+		level = load(Level.DIR_PATH.path_join(level_file_name))
 @export_tool_button("Start Level") var start_level_action = start_level
+
+@export var card_apply_interval := 1.0
+@export var card_return_interval := 0.1
 
 @export var hand: Hand
 @export var stack: Stack
@@ -26,6 +25,11 @@ const SCENE = preload("res://scenes/playfield.tscn")
 @export var background: Background
 
 var level: Level
+var slot_expressions: Array[LatexExpression] = []
+var scoring = false:
+	set(value):
+		scoring = value
+		start_button.disabled = scoring
 
 
 static func from_level_file_name(level_file_name: String) -> Playfield:
@@ -61,9 +65,9 @@ func start_level(file_name := "") -> void:
 	goal_latexture_rect.Render()
 	stack.add_child(Card.from_expression(level.start_value))
 	for expression in level.slot_expressions:
-		slot_container.add_child(Slot.from_expression(expression))
+		slot_container.add_child(Slot.from_expression(expression.duplicate() if expression != null else null))
 	for expression in level.hand_expressions:
-		hand.add_child(Card.from_expression(expression))
+		hand.add_child(Card.from_expression(expression.duplicate() if expression != null else null))
 
 	get_tree().paused = false
 
@@ -81,20 +85,39 @@ func check_slots() -> bool:
 func check_win_condition() -> void:
 	if level.win_condition.evaluate(stack.cards[-1].evaluate()):
 		background.pulse_good()
+		Save.data.level_statuses[level_file_name] = Level.Status.COMPLETED
+		Save.data.update_level_statuses()
+		create_tween().tween_callback(level_completed.emit).set_delay(card_apply_interval)
 	else:
 		background.pulse_bad()
+		var tween = create_tween()
+		for i in range(1, stack.cards.size()):
+			var card = stack.cards[-i]
+			tween.tween_callback(
+				card.reparent.bind(slot_container.get_child(-i))
+			).set_delay(
+				card_apply_interval if i == 1 else card_return_interval
+			)
+			tween.tween_callback(card.set.bind(&"expression", slot_expressions[-i]))
+		tween.tween_callback(set.bind(&"scoring", false))
 
 
 func _on_start_button_pressed() -> void:
 	if not check_slots():
 		return
 
-	start_button.disabled = true
-	for i in range(slot_container.get_child_count()):
-		create_tween().tween_callback(slot_container.get_child(i).card.reparent.bind(stack)).set_delay(i * CARD_APPLY_INTERVAL)
-		create_tween().tween_callback(background.pulse).set_delay(i * CARD_APPLY_INTERVAL)
-
-	create_tween().tween_callback(check_win_condition).set_delay(slot_container.get_child_count() * CARD_APPLY_INTERVAL)
+	scoring = true
+	var num_slots = slot_container.get_child_count()
+	slot_expressions.resize(num_slots)
+	var tween = create_tween()
+	for i in range(num_slots):
+		var card: Card = slot_container.get_child(i).card
+		slot_expressions[i] = card.expression.duplicate()
+		var tweener = tween.tween_callback(card.reparent.bind(stack))
+		if i != 0:
+			tweener.set_delay(card_apply_interval)
+		tween.tween_callback(background.pulse)
+	tween.tween_callback(check_win_condition).set_delay(card_apply_interval)
 
 
 func _on_pause_button_pressed():

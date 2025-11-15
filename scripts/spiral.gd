@@ -16,7 +16,7 @@ enum State {
 		state = value
 		if state != previous_state:
 			tween_radius_offset(int(state) * 8.0)
-			tween_opacity(1.0 - int(state) * 0.5)
+			tween_opacity(1.0 - (int(state) * 0.5) ** 2.0)
 			create_tween().tween_callback(state_change_finished.emit).set_delay(tween_duration)
 
 @export var num_cards := 160:

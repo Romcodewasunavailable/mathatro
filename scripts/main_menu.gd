@@ -10,7 +10,7 @@ signal disappeared_level_select()
 
 
 func _ready() -> void:
-	if Save.data.level_statuses[Level.file_names[0]] == Level.Status.COMPLETED:
+	if Save.data.get_highest_available() != Level.file_names[0]:
 		play_button.text = "Continue"
 
 

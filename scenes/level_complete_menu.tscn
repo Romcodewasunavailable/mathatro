@@ -1,9 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://c4whrh7kep8br"]
+[gd_scene load_steps=7 format=3 uid="uid://dlyvj3yfgr2uq"]
 
-[ext_resource type="Script" uid="uid://cvd2gxrgehosf" path="res://scripts/main_menu.gd" id="1_l6cm7"]
+[ext_resource type="Script" uid="uid://d0kyaxfierp0v" path="res://scripts/level_complete_menu.gd" id="1_nsfat"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_vue75"]
-font_size = 144
+font_size = 80
 
 [sub_resource type="Animation" id="Animation_ekxnf"]
 length = 0.001
@@ -59,15 +59,15 @@ _data = {
 &"fade_out": SubResource("Animation_bqqt6")
 }
 
-[node name="MainMenu" type="Control" node_paths=PackedStringArray("play_button", "animation_player")]
+[node name="LevelCompleteMenu" type="Control" node_paths=PackedStringArray("next_level_button", "animation_player")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_l6cm7")
-play_button = NodePath("VBoxContainer/VBoxContainer/PlayButton")
+script = ExtResource("1_nsfat")
+next_level_button = NodePath("VBoxContainer/VBoxContainer/NextLevelButton")
 animation_player = NodePath("AnimationPlayer")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
@@ -88,7 +88,7 @@ theme_override_constants/separation = 64
 [node name="Label" type="Label" parent="VBoxContainer"]
 layout_mode = 2
 mouse_filter = 1
-text = "Mathatro"
+text = "Level Complete"
 label_settings = SubResource("LabelSettings_vue75")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -98,12 +98,12 @@ layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/separation = 16
 
-[node name="PlayButton" type="Button" parent="VBoxContainer/VBoxContainer"]
+[node name="NextLevelButton" type="Button" parent="VBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(512, 128)
 layout_mode = 2
 focus_mode = 0
 theme_override_font_sizes/font_size = 48
-text = "Play"
+text = "Next Level"
 
 [node name="LevelSelectButton" type="Button" parent="VBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(512, 128)
@@ -112,12 +112,12 @@ focus_mode = 0
 theme_override_font_sizes/font_size = 48
 text = "Level Select"
 
-[node name="QuitButton" type="Button" parent="VBoxContainer/VBoxContainer"]
+[node name="MainMenuButton" type="Button" parent="VBoxContainer/VBoxContainer"]
 custom_minimum_size = Vector2(512, 128)
 layout_mode = 2
 focus_mode = 0
 theme_override_font_sizes/font_size = 48
-text = "Save and Quit"
+text = "Main Menu"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -125,7 +125,7 @@ libraries = {
 }
 autoplay = "fade_in"
 
-[connection signal="pressed" from="VBoxContainer/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/VBoxContainer/NextLevelButton" to="." method="_on_next_level_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/VBoxContainer/LevelSelectButton" to="." method="_on_level_select_button_pressed"]
-[connection signal="pressed" from="VBoxContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/VBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

@@ -5,6 +5,15 @@ extends Resource
 @export var level_statuses: Dictionary[String, Level.Status]
 
 
+func get_highest_available() -> String:
+	for i in range(Level.file_names.size() - 1, -1, -1):
+		var file_name = Level.file_names[i]
+		if level_statuses[file_name] == Level.Status.AVAILABLE:
+			return file_name
+
+	return Level.file_names[0]
+
+
 func update_level_statuses() -> void:
 	for file_name in level_statuses.keys():
 		if file_name not in Level.file_names:
