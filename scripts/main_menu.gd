@@ -4,6 +4,7 @@ extends Control
 
 signal play_button_pressed()
 signal disappeared_level_select()
+signal quit_button_pressed()
 
 @export var play_button: Button
 @export var animation_player: AnimationPlayer
@@ -25,7 +26,8 @@ func _on_level_select_button_pressed() -> void:
 
 
 func _on_quit_button_pressed() -> void:
-	get_tree().root.propagate_notification(NOTIFICATION_WM_CLOSE_REQUEST)
+	quit_button_pressed.emit()
+	animation_player.play(&"fade_out")
 
 
 func _on_animation_player_animation_finished(anim_name: StringName) -> void:

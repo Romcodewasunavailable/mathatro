@@ -50,3 +50,5 @@ static var file_names: PackedStringArray
 
 static func _static_init() -> void:
 	file_names = DirAccess.get_files_at(DIR_PATH)
+	for i in range(file_names.size()):
+		file_names[i] = file_names[i].trim_suffix(".remap")

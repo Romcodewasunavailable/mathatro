@@ -17,7 +17,7 @@ var playfield: Playfield
 func _ready() -> void:
 	Engine.time_scale = 0.2
 	create_tween().tween_property(Engine, ^"time_scale", 1.0, 2.0).set_trans(Tween.TRANS_CUBIC)
-	create_tween().tween_callback(load_main_menu).set_delay(1.5)
+	create_tween().tween_callback(load_main_menu).set_delay(1.0)
 	spiral.state = Spiral.State.CLOSED
 
 
@@ -28,13 +28,19 @@ func load_main_menu() -> void:
 		spiral.state = Spiral.State.OPEN
 	)
 	main_menu.disappeared_level_select.connect(load_level_select_menu)
+	main_menu.quit_button_pressed.connect(func():
+		create_tween().tween_callback(
+			get_tree().root.propagate_notification.bind(NOTIFICATION_WM_CLOSE_REQUEST)
+		).set_delay(0.5)
+		spiral.state = Spiral.State.OPEN
+	)
 	menu_canvas_layer.add_child(main_menu)
 
 
 func load_level_select_menu() -> void:
 	var level_select_menu: LevelSelectMenu = LEVEL_SELECT_MENU_SCENE.instantiate()
-	level_select_menu.play_button_pressed.connect(func(_file_name: String):
-		start_level()
+	level_select_menu.play_button_pressed.connect(func(file_name: String):
+		start_level(file_name)
 		spiral.state = Spiral.State.OPEN
 	)
 	level_select_menu.disappeared_main_menu.connect(load_main_menu)

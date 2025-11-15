@@ -20,7 +20,7 @@ func update_level_squares() -> void:
 		child.queue_free()
 
 	var number = 1
-	for file_name in DirAccess.get_files_at("res://levels"):
+	for file_name in Level.file_names:
 		var level_square = LevelSquare.from_level_data(
 			file_name,
 			number,
