@@ -1,0 +1,54 @@
+[gd_resource type="Resource" script_class="Level" load_steps=10 format=3 uid="uid://cv3c6g5tmvcl3"]
+
+[ext_resource type="Script" uid="uid://dkcni75ogr2o4" path="res://scripts/latex_expression.gd" id="1_jj0m5"]
+[ext_resource type="Script" uid="uid://dcky4oisx2cv3" path="res://scripts/level.gd" id="2_2ri0w"]
+
+[sub_resource type="Resource" id="Resource_hcram"]
+script = ExtResource("1_jj0m5")
+raw = "-(x)"
+latex = "-{x}"
+metadata/_custom_type_script = "uid://dkcni75ogr2o4"
+
+[sub_resource type="Resource" id="Resource_or8s0"]
+script = ExtResource("1_jj0m5")
+raw = "(x) / 2.0"
+latex = "\\frac{x}{2}"
+metadata/_custom_type_script = "uid://dkcni75ogr2o4"
+
+[sub_resource type="Resource" id="Resource_ik1ho"]
+script = ExtResource("1_jj0m5")
+raw = "5.0 * (x) - 2.0"
+latex = "5{x} - 2"
+metadata/_custom_type_script = "uid://dkcni75ogr2o4"
+
+[sub_resource type="Resource" id="Resource_7k7u2"]
+script = ExtResource("1_jj0m5")
+raw = "((x) ** 3.0 - 1.0) / 3.0"
+latex = "\\int_{1}^{x} t^2 \\,dt"
+metadata/_custom_type_script = "uid://dkcni75ogr2o4"
+
+[sub_resource type="Resource" id="Resource_jj0m5"]
+script = ExtResource("1_jj0m5")
+raw = "1.0 / (x)"
+latex = "\\frac{1}{x}"
+metadata/_custom_type_script = "uid://dkcni75ogr2o4"
+
+[sub_resource type="Resource" id="Resource_2ri0w"]
+script = ExtResource("1_jj0m5")
+raw = "0.0"
+latex = "0"
+metadata/_custom_type_script = "uid://dkcni75ogr2o4"
+
+[sub_resource type="Resource" id="Resource_qkdl1"]
+script = ExtResource("1_jj0m5")
+raw = "is_zero_approx(x)"
+latex = "{x} = 0"
+metadata/_custom_type_script = "uid://dkcni75ogr2o4"
+
+[resource]
+script = ExtResource("2_2ri0w")
+start_value = SubResource("Resource_2ri0w")
+win_condition = SubResource("Resource_qkdl1")
+slot_expressions = Array[ExtResource("1_jj0m5")]([null, null, null, SubResource("Resource_jj0m5"), null])
+hand_expressions = Array[ExtResource("1_jj0m5")]([SubResource("Resource_hcram"), SubResource("Resource_or8s0"), SubResource("Resource_ik1ho"), SubResource("Resource_7k7u2")])
+metadata/_custom_type_script = "uid://dcky4oisx2cv3"

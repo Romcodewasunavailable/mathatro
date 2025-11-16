@@ -95,6 +95,6 @@ func start_level(file_name := "") -> void:
 	playfield_canvas_layer.add_child(playfield)
 
 
-func _on_spiral_state_change_finished():
+func _on_spiral_state_change_finished() -> void:
 	if spiral.state == Spiral.State.CLOSED and playfield != null:
 		playfield.queue_free()

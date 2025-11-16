@@ -2,7 +2,7 @@
 extends Node
 
 
-func matrix(size: Vector2i, data := PackedFloat32Array()):
+func matrix(size: Vector2i, data := PackedFloat32Array()) -> Float32Matrix:
 	var new_matrix = Float32Matrix.new(size)
 	if not data.is_empty():
 		new_matrix.data = data
