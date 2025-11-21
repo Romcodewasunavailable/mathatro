@@ -13,7 +13,8 @@ func _ready() -> void:
 
 func _notification(what) -> void:
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
-		save_data()
+		if not Engine.is_editor_hint():
+			save_data()
 		get_tree().quit()
 
 
